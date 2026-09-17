@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="教育产品与数字化实践项目档案：从真实教学场景出发，将教育经验转化为可持续使用的数字产品。">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='25' cy='32' r='20' fill='%231261ea'/%3E%3Ccircle cx='39' cy='32' r='16' fill='%23ff7a1a' fill-opacity='.9'/%3E%3C/svg%3E">
+  <title>教育产品与数字化实践</title>
+  <style>
+    :root {
+      --paper: #ffffff;
+      --ink: #071738;
+      --muted: #5c6e8e;
+      --faint: #90a2bf;
+      --blue: #1261ea;
+      --blue-strong: #0755d9;
+      --blue-soft: #eef5ff;
+      --blue-pale: #f7faff;
+      --orange: #ff7a1a;
+      --line: #d6e0ee;
+      --line-strong: #aebfd8;
+      --serif: "Songti SC", "STSong", "SimSun", serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --max: 1360px;
+      --gutter: clamp(22px, 4vw, 68px);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: radial-gradient(circle at 1px 1px, rgba(9, 34, 79, .035) .7px, transparent .8px);
+      background-size: 18px 18px;
+      opacity: .36;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    img { display: block; max-width: 100%; }
+    ::selection { background: #cfe0ff; color: var(--ink); }
+
+    .shell { width: min(100%, var(--max)); margin: 0 auto; padding-inline: var(--gutter); }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(214, 224, 238, .82);
+      background: rgba(255, 255, 255, .92);
+      backdrop-filter: blur(16px);
+    }
+    .header-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 13px; font-weight: 720; letter-spacing: -.02em; }
+    .brand-mark { position: relative; width: 35px; height: 24px; flex: 0 0 auto; }
+    .brand-mark::before,
+    .brand-mark::after { content: ""; position: absolute; top: 2px; width: 22px; height: 22px; border-radius: 50%; }
+    .brand-mark::before { left: 0; background: var(--blue); }
+    .brand-mark::after { right: 0; background: var(--orange); mix-blend-mode: multiply; }
+    .nav { display: flex; align-items: center; gap: clamp(22px, 3vw, 46px); font-size: 14px; font-weight: 600; }
+    .nav a { position: relative; padding-block: 8px; }
+    .nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 2px; height: 2px; background: var(--blue); transition: right .25s ease; }
+    .nav a:hover::after,
+    .nav a:focus-visible::after,
+    .nav a.is-active::after { right: 0; }
+
+    .hero {
+      min-height: calc(100vh - 74px);
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(480px, 1.08fr);
+      align-items: center;
+      gap: clamp(34px, 5vw, 90px);
+      padding-block: clamp(72px, 9vh, 120px) 54px;
+    }
+    .hero h1 {
+      margin: 0;
+      max-width: 730px;
+      font-family: var(--serif);
+      font-size: clamp(52px, 5.3vw, 84px);
+      line-height: 1.12;
+      font-weight: 800;
+      letter-spacing: -.045em;
+    }
+    .hero-lede {
+      max-width: 680px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.45vw, 22px);
+      line-height: 1.8;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 34px; margin-top: 34px; }
+    .primary-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      min-height: 54px;
+      padding: 0 25px;
+      color: white;
+      background: var(--blue);
+      border: 1px solid var(--blue);
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: 0 10px 28px rgba(18, 97, 234, .15);
+      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .primary-link:hover { transform: translateY(-2px); background: var(--blue-strong); box-shadow: 0 14px 32px rgba(18, 97, 234, .22); }
+    .arrow { width: 18px; height: 18px; transition: transform .2s ease; }
+    a:hover .arrow { transform: translateX(4px); }
+    .hero-count { color: var(--muted); font-size: 14px; letter-spacing: .04em; }
+    .hero-visual { position: relative; }
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      width: 82px;
+      aspect-ratio: 1;
+      top: -22px;
+      right: 12%;
+      border: 1px solid #c6d6ef;
+      border-radius: 50%;
+      z-index: -1;
+    }
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      width: 26px;
+      aspect-ratio: 1;
+      top: 30px;
+      right: 8%;
+      background: var(--orange);
+      border-radius: 50%;
+      z-index: -1;
+    }
+    .hero-visual img { width: 100%; filter: saturate(.94); }
+    .process {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      align-items: center;
+      gap: 24px;
+      margin-top: 18px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+    .process-label { color: var(--faint); font-size: 10px; letter-spacing: .24em; text-transform: uppercase; }
+    .process-steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); }
+    .process-steps::before { content: ""; position: absolute; left: 7%; right: 7%; top: 6px; height: 1px; background: var(--line-strong); }
+    .process-step { position: relative; padding-top: 24px; color: var(--muted); font-size: 12px; text-align: center; }
+    .process-step::before { content: ""; position: absolute; top: 0; left: 50%; width: 11px; height: 11px; border: 3px solid white; border-radius: 50%; background: #b9c8dc; box-shadow: 0 0 0 1px var(--line); transform: translateX(-50%); }
+    .process-step:nth-child(2)::before { background: var(--blue); }
+    .process-step:nth-child(4)::before { background: var(--orange); }
+
+    .section { padding-block: clamp(88px, 10vw, 152px); border-top: 1px solid var(--line); }
+    .section-head { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 28px; margin-bottom: 46px; }
+    .section-title { margin: 0; font-family: var(--serif); font-size: clamp(40px, 4vw, 62px); line-height: 1.15; letter-spacing: -.04em; }
+    .section-rule { height: 1px; background: var(--line-strong); }
+    .section-note { max-width: 320px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+    .feature-case {
+      display: grid;
+      grid-template-columns: minmax(250px, .7fr) minmax(520px, 1.3fr);
+      gap: clamp(36px, 6vw, 92px);
+      align-items: center;
+      padding: clamp(34px, 5vw, 72px) 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .index-no { color: var(--blue); font-family: var(--serif); font-size: 46px; font-weight: 700; line-height: 1; }
+    .case-title { margin: 18px 0 14px; font-family: var(--serif); font-size: clamp(30px, 3vw, 46px); line-height: 1.18; letter-spacing: -.025em; }
+    .case-copy { margin: 0; max-width: 520px; color: var(--muted); font-size: 16px; line-height: 1.8; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 26px; color: var(--faint); font-size: 12px; }
+    .meta span + span::before { content: "/"; margin-right: 18px; color: var(--line-strong); }
+
+    .app-frame { position: relative; padding: 16px; background: var(--blue-pale); border: 1px solid #e1e9f4; }
+    .app-window { overflow: hidden; min-height: 360px; background: white; border: 1px solid var(--line-strong); border-radius: 9px; box-shadow: 0 18px 44px rgba(27, 65, 126, .1); }
+    .window-bar { height: 38px; display: flex; align-items: center; gap: 6px; padding-inline: 14px; border-bottom: 1px solid var(--line); }
+    .window-bar i { width: 7px; height: 7px; border-radius: 50%; background: #c9d4e4; }
+    .app-body { display: grid; grid-template-columns: 155px 1fr; min-height: 320px; }
+    .app-side { padding: 24px 16px; border-right: 1px solid var(--line); }
+    .app-logo { font-size: 13px; font-weight: 750; margin-bottom: 28px; }
+    .app-nav-line { height: 30px; margin-bottom: 8px; border-radius: 5px; background: transparent; }
+    .app-nav-line:first-of-type { background: #eaf2ff; }
+    .app-nav-line::before { content: ""; display: block; width: 62%; height: 6px; margin: 12px 10px; border-radius: 8px; background: #c4d2e5; }
+    .app-main { padding: 28px; }
+    .app-main h4 { margin: 0 0 8px; font-size: 18px; }
+    .muted-line { height: 7px; margin-top: 12px; border-radius: 8px; background: #dce5f1; }
+    .muted-line.short { width: 58%; }
+    .timeline { position: relative; margin-top: 35px; padding-left: 28px; }
+    .timeline::before { content: ""; position: absolute; left: 6px; top: 5px; bottom: 5px; width: 1px; background: #b9cbe5; }
+    .timeline-row { position: relative; margin-bottom: 28px; }
+    .timeline-row::before { content: ""; position: absolute; left: -27px; top: 2px; width: 10px; height: 10px; border: 2px solid var(--blue); border-radius: 50%; background: white; }
+    .timeline-row strong { display: block; font-size: 12px; }
+    .timeline-row small { color: var(--faint); }
+
+    .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .project-card {
+      position: relative;
+      min-height: 320px;
+      display: grid;
+      grid-template-columns: 1fr 190px;
+      gap: 22px;
+      align-items: center;
+      padding: clamp(34px, 4vw, 58px) clamp(24px, 4vw, 54px);
+      border-bottom: 1px solid var(--line);
+      transition: background .25s ease;
+    }
+    .project-card:nth-child(odd) { border-right: 1px solid var(--line); }
+    .project-card:hover { background: var(--blue-pale); }
+    .project-card .index-no { font-size: 31px; }
+    .project-card .case-title { margin-top: 14px; font-size: clamp(25px, 2vw, 34px); }
+    .project-card .case-copy { font-size: 14px; }
+    .mini-visual { position: relative; height: 170px; display: grid; place-items: center; }
+    .mini-visual::before { content: ""; position: absolute; inset: 18px; border-radius: 50%; background: #eaf2ff; }
+    .project-card:nth-child(3n) .mini-visual::before { background: #fff0e5; }
+    .device, .sheet, .calendar, .video-screen { position: relative; z-index: 1; background: white; border: 1px solid #adc1df; box-shadow: 0 12px 26px rgba(29, 65, 124, .1); }
+    .device { width: 80px; height: 148px; padding: 13px 8px; border-radius: 17px; }
+    .device::before { content: ""; display: block; width: 28px; height: 5px; margin: -7px auto 17px; border-radius: 5px; background: #dae4f2; }
+    .planet { width: 42px; height: 42px; margin: 8px auto 18px; border: 3px solid var(--blue); border-radius: 50%; transform: rotate(-16deg); }
+    .planet::after { content: ""; position: absolute; width: 55px; height: 16px; left: 10px; top: 42px; border: 2px solid var(--orange); border-radius: 50%; }
+    .tiny-line { height: 5px; margin: 7px 4px; border-radius: 4px; background: #d5e0ef; }
+    .sheet { width: 130px; height: 150px; padding: 18px; border-radius: 6px; transform: rotate(-3deg); }
+    .sheet::before { content: "作文"; color: var(--blue); font-family: var(--serif); font-size: 22px; font-weight: 700; }
+    .transfer { position: relative; z-index: 1; display: flex; align-items: end; gap: 10px; }
+    .laptop { width: 126px; height: 84px; padding: 11px; background: white; border: 1px solid #adc1df; border-radius: 7px 7px 2px 2px; }
+    .laptop::after { content: ""; position: absolute; width: 145px; height: 5px; left: -10px; bottom: -6px; background: #c4d2e6; border-radius: 1px 1px 8px 8px; }
+    .qr { width: 42px; height: 42px; margin: 8px auto; background: repeating-conic-gradient(var(--ink) 0 25%, transparent 0 50%) 50% / 11px 11px; }
+    .phone { width: 44px; height: 83px; padding: 7px 5px; background: white; border: 1px solid #adc1df; border-radius: 9px; }
+    .phone::after { content: "✓"; display: grid; place-items: center; height: 55px; color: var(--blue); font-size: 22px; }
+    .timeline-art { position: relative; z-index: 1; width: 180px; height: 90px; background: white; border: 1px solid #adc1df; border-radius: 8px; padding: 28px 12px; }
+    .timeline-art::before { content: ""; display: block; height: 1px; background: #bbc9dc; }
+    .timeline-art i { position: absolute; top: 24px; width: 10px; height: 10px; border: 3px solid white; border-radius: 50%; background: #becbdd; }
+    .timeline-art i:nth-child(1) { left: 32px; }
+    .timeline-art i:nth-child(2) { left: 84px; background: var(--orange); }
+    .timeline-art i:nth-child(3) { right: 28px; background: var(--blue); }
+    .calendar { width: 170px; height: 130px; padding: 16px; border-radius: 8px; }
+    .calendar::before { content: "教室资源"; display: block; margin-bottom: 14px; font-size: 11px; font-weight: 700; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    .calendar-grid i { height: 17px; background: #e8eef7; }
+    .calendar-grid i:nth-child(6), .calendar-grid i:nth-child(11) { background: #ffbf91; }
+    .video-screen { width: 176px; height: 112px; border-radius: 7px; overflow: hidden; }
+    .video-screen::before { content: "家长会影像"; display: grid; place-items: center; height: 80px; color: var(--muted); font-family: var(--serif); font-size: 17px; background: #f3f7fc; }
+    .video-controls { height: 31px; background: var(--ink); }
+    .video-controls::before { content: "▶  00:00 / 45:20"; color: white; font-size: 8px; line-height: 31px; padding-left: 10px; }
+
+    .education { background: linear-gradient(to bottom, #fff 0, #fafdff 44%, #fff 100%); }
+    .education-layout { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: clamp(30px, 6vw, 92px); }
+    .edu-index { position: sticky; top: 110px; align-self: start; border-left: 1px solid var(--line); }
+    .edu-index a { position: relative; display: block; padding: 10px 0 10px 28px; color: var(--muted); font-size: 12px; line-height: 1.45; transition: color .2s ease; }
+    .edu-index a::before { content: ""; position: absolute; left: -4px; top: 16px; width: 7px; height: 7px; border-radius: 50%; background: #a8b8cd; }
+    .edu-index a:hover,
+    .edu-index a.is-active { color: var(--ink); }
+    .edu-index a.is-active::before { background: var(--orange); }
+    .edu-list { border-top: 1px solid var(--line); }
+    .edu-item {
+      min-height: 315px;
+      display: grid;
+      grid-template-columns: minmax(260px, .72fr) minmax(360px, 1.28fr);
+      gap: 34px;
+      align-items: center;
+      padding-block: 52px;
+      border-bottom: 1px solid var(--line);
+    }
+    .edu-item .case-title { font-size: clamp(28px, 2.6vw, 42px); }
+    .edu-media { min-height: 190px; display: grid; place-items: center; }
+    .edu-media img { width: 100%; max-height: 285px; object-fit: contain; }
+    .skill-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; transform: rotate(-2deg); }
+    .skill-card { min-height: 135px; padding: 18px 12px; background: white; border: 1px solid #c3d4eb; box-shadow: 0 12px 22px rgba(36, 72, 129, .08); }
+    .skill-card:nth-child(even) { transform: translateY(14px); }
+    .skill-card strong { font-family: var(--serif); font-size: 17px; }
+    .skill-card i { display: block; width: 32px; height: 32px; margin: 26px auto 0; border: 2px solid var(--blue); border-radius: 50%; }
+    .animal-book { position: relative; width: 100%; max-width: 480px; height: 180px; border-bottom: 12px solid #0d4fa9; border-radius: 0 0 45% 45%; }
+    .animal-book::before,
+    .animal-book::after { content: ""; position: absolute; bottom: 0; width: 50%; height: 120px; background: white; border: 1px solid #b9cce6; }
+    .animal-book::before { left: 0; border-radius: 60% 8px 0 20px; transform: skewY(7deg); }
+    .animal-book::after { right: 0; border-radius: 8px 60% 20px 0; transform: skewY(-7deg); }
+    .animals { position: absolute; z-index: 2; inset: 5px 28px auto; display: flex; align-items: end; justify-content: space-around; }
+    .animal { display: block; width: 38px; height: 58px; border-radius: 50% 50% 42% 42%; background: var(--blue); }
+    .animal:nth-child(2) { width: 50px; height: 76px; background: #397be0; }
+    .animal:nth-child(3) { width: 34px; height: 45px; background: var(--orange); }
+    .animal:nth-child(4) { width: 46px; height: 66px; background: #205caf; }
+    .word-tools { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .word-tool { min-height: 126px; display: grid; place-items: center; padding: 12px; background: white; border: 1px solid #c9d8ea; font-family: var(--serif); font-size: 34px; font-weight: 700; color: var(--blue); box-shadow: 0 9px 20px rgba(35, 72, 130, .07); }
+    .assessment-flow { width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .flow-node { width: 96px; height: 96px; display: grid; place-items: center; padding: 10px; border: 1px solid #afc7e7; border-radius: 50%; color: var(--blue); font-family: var(--serif); font-weight: 700; text-align: center; background: white; }
+    .flow-arrow { width: 50px; height: 1px; background: var(--orange); position: relative; }
+    .flow-arrow::after { content: ""; position: absolute; right: 0; top: -4px; width: 7px; height: 7px; border-top: 1px solid var(--orange); border-right: 1px solid var(--orange); transform: rotate(45deg); }
+
+    .closing { padding-block: clamp(90px, 11vw, 170px); border-top: 1px solid var(--line); }
+    .closing-grid { display: grid; grid-template-columns: 1.45fr .55fr; gap: 80px; align-items: end; }
+    .closing h2 { margin: 0; max-width: 920px; font-family: var(--serif); font-size: clamp(44px, 5.5vw, 78px); line-height: 1.22; letter-spacing: -.045em; }
+    .closing p { margin: 0; padding-left: 25px; border-left: 3px solid var(--orange); color: var(--muted); font-size: 15px; line-height: 1.8; }
+    .site-footer { border-top: 1px solid var(--line); }
+    .footer-inner { min-height: 124px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .footer-copy strong { display: block; margin-bottom: 6px; font-family: var(--serif); font-size: 18px; }
+    .footer-copy small { color: var(--faint); }
+    .footer-links { display: flex; gap: 28px; color: var(--muted); font-size: 13px; }
+    .footer-links a:hover { color: var(--blue); }
+    .back-top {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 40;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 50%;
+      color: var(--ink);
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 8px 24px rgba(26, 54, 99, .1);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease, color .2s ease, border .2s ease;
+    }
+    .back-top.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+    .back-top:hover { color: var(--blue); border-color: var(--blue); }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1050px) {
+      .hero { min-height: auto; grid-template-columns: 1fr; padding-top: 80px; }
+      .hero-copy { max-width: 830px; }
+      .hero-visual { max-width: 760px; margin-inline: auto; }
+      .section-head { grid-template-columns: 1fr; gap: 16px; }
+      .section-rule { width: 100%; }
+      .feature-case { grid-template-columns: 1fr; }
+      .project-card { grid-template-columns: 1fr; }
+      .project-card .mini-visual { height: 150px; }
+      .education-layout { grid-template-columns: 1fr; }
+      .edu-index { position: static; display: flex; overflow-x: auto; border-left: 0; border-bottom: 1px solid var(--line); }
+      .edu-index a { flex: 0 0 auto; padding: 14px 18px; }
+      .edu-index a::before { left: 4px; top: 19px; }
+      .closing-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 760px) {
+      :root { --gutter: 20px; }
+      .header-inner { min-height: 64px; }
+      .brand { font-size: 14px; }
+      .brand-mark { transform: scale(.85); }
+      .nav { gap: 18px; font-size: 12px; }
+      .nav a:last-child { display: none; }
+      .hero { padding-block: 64px 34px; }
+      .hero h1 { font-size: clamp(44px, 13vw, 64px); }
+      .hero-lede { font-size: 16px; }
+      .hero-actions { align-items: flex-start; flex-direction: column; gap: 18px; }
+      .hero-visual { margin-inline: -16px; }
+      .process { grid-template-columns: 1fr; }
+      .process-label { display: none; }
+      .process-step { font-size: 10px; }
+      .section { padding-block: 78px; }
+      .section-title { font-size: 42px; }
+      .feature-case { padding-top: 28px; }
+      .app-frame { padding: 7px; }
+      .app-window { min-height: 280px; }
+      .app-body { grid-template-columns: 94px 1fr; min-height: 245px; }
+      .app-side { padding: 18px 9px; }
+      .app-main { padding: 20px 15px; }
+      .project-grid { grid-template-columns: 1fr; }
+      .project-card { min-height: 0; grid-template-columns: minmax(0, 1fr) 130px; padding-block: 42px; }
+      .project-card:nth-child(odd) { border-right: 0; }
+      .project-card .mini-visual { transform: scale(.82); transform-origin: center; }
+      .edu-item { min-height: 0; grid-template-columns: 1fr; padding-block: 48px; }
+      .edu-media { min-height: 150px; }
+      .skill-cards { gap: 5px; }
+      .skill-card { min-height: 112px; padding: 12px 8px; }
+      .skill-card strong { font-size: 14px; }
+      .word-tool { min-height: 96px; font-size: 28px; }
+      .flow-node { width: 76px; height: 76px; font-size: 13px; }
+      .flow-arrow { width: 24px; }
+      .closing h2 { font-size: 44px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; padding-block: 32px; }
+      .back-top { right: 16px; bottom: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .project-card { grid-template-columns: 1fr; }
+      .project-card .mini-visual { height: 125px; }
+      .brand > span:last-child { display: none; }
+      .nav a:nth-child(2) { display: block; }
+      .skill-cards { grid-template-columns: repeat(2, 1fr); }
+      .word-tools { grid-template-columns: repeat(2, 1fr); }
+      .assessment-flow { gap: 5px; }
+      .flow-node { width: 68px; height: 68px; font-size: 12px; }
+      .flow-arrow { width: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    @media print {
+      .site-header, .back-top, .hero-actions { display: none !important; }
+      body::before { display: none; }
+      .hero { min-height: auto; padding-block: 40px; }
+      .section, .closing { padding-block: 50px; }
+      .reveal { opacity: 1; transform: none; }
+      .project-card, .feature-case, .edu-item { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="返回首页">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>教育产品与数字化实践</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#products">核心产品</a>
+        <a href="#education">教育内容</a>
+        <a href="#index">项目索引</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="shell hero" aria-labelledby="hero-title">
+      <div class="hero-copy reveal">
+        <h1 id="hero-title">把教育经验，<br>做成真正可用的产品</h1>
+        <p class="hero-lede">从课堂现场出发，将教学方法、家校沟通与校区运营，转化为可持续迭代的数字工具。</p>
+        <div class="hero-actions">
+          <a class="primary-link" href="#products">浏览项目
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <span class="hero-count">12 个项目 · 2 条主线</span>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <img src="project-portfolio-assets/experience-to-product.png" alt="课堂方案、家校沟通与校区运营经验汇聚成数字产品的示意图">
+      </div>
+      <div class="process reveal" aria-label="产品形成路径">
+        <div class="process-label">Education × Product</div>
+        <div class="process-steps">
+          <div class="process-step">场景洞察</div>
+          <div class="process-step">产品构建</div>
+          <div class="process-step">应用落地</div>
+          <div class="process-step">持续迭代</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="products" aria-labelledby="products-title">
+      <div class="shell">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="products-title">核心产品项目</h2>
+          <div class="section-rule" aria-hidden="true"></div>
+          <p class="section-note">将真实教学与运营需求，转化为长期可用的数字产品。</p>
+        </div>
+
+        <article class="feature-case reveal" id="project-01">
+          <div>
+            <div class="index-no">01</div>
+            <h3 class="case-title">学生成长手册</h3>
+            <p class="case-copy">本地化学生成长档案管理系统。记录课堂表现、阅读写作、作品、测评和家校沟通，并支持一键生成可打印报告。</p>
+            <div class="meta"><span>本地网页</span><span>SQLite</span><span>文件存储</span><span>打印报告</span></div>
+          </div>
+          <div class="app-frame" aria-label="学生成长手册界面示意">
+            <div class="app-window">
+              <div class="window-bar"><i></i><i></i><i></i></div>
+              <div class="app-body">
+                <div class="app-side">
+                  <div class="app-logo">学生成长手册</div>
+                  <div class="app-nav-line"></div><div class="app-nav-line"></div><div class="app-nav-line"></div><div class="app-nav-line"></div>
+                </div>
+                <div class="app-main">
+                  <h4>你好，李同学</h4>
+                  <div class="muted-line short"></div>
+                  <div class="timeline">
+                    <div class="timeline-row"><strong>数学单元测试</strong><small>在本次测试中表现稳定，继续加油</small></div>
+                    <div class="timeline-row"><strong>参加校园科技节</strong><small>展现了良好的团队协作能力</small></div>
+                    <div class="timeline-row"><strong>新学期目标</strong><small>设定学习目标与行动计划</small></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="project-grid" id="index">
+          <article class="project-card reveal" id="project-02">
+            <div><div class="index-no">02</div><h3 class="case-title">改作文工作台</h3><p class="case-copy">面向老师的作文智能批改与报告生成工具，把真实批改经验拆解为结构化评价维度。</p><div class="meta"><span>网页端</span><span>GitHub Pages</span><span>阿里云 FC / OSS</span></div></div>
+            <div class="mini-visual"><div class="sheet"><div class="tiny-line"></div><div class="tiny-line"></div><div class="tiny-line"></div><div class="tiny-line"></div></div></div>
+          </article>
+          <article class="project-card reveal" id="project-03">
+            <div><div class="index-no">03</div><h3 class="case-title">阅星球／阅读伴学打卡系统</h3><p class="case-copy">微信小程序与教师管理后台，连接阅读打卡、教师反馈、老师预览与星光奖励。</p><div class="meta"><span>微信小程序</span><span>教师后台</span><span>体验版测试</span></div></div>
+            <div class="mini-visual"><div class="device"><div class="planet"></div><div class="tiny-line"></div><div class="tiny-line"></div></div></div>
+          </article>
+          <article class="project-card reveal" id="project-04">
+            <div><div class="index-no">04</div><h3 class="case-title">一拍传</h3><p class="case-copy">通过局域网扫码连接手机与电脑，批量推送照片到电脑剪贴板，并可直接粘贴使用。</p><div class="meta"><span>局域网</span><span>扫码配对</span><span>剪贴板</span></div></div>
+            <div class="mini-visual"><div class="transfer"><div class="laptop"><div class="qr"></div></div><div class="phone"></div></div></div>
+          </article>
+          <article class="project-card reveal" id="project-05">
+            <div><div class="index-no">05</div><h3 class="case-title">Taskline 日程管理</h3><p class="case-copy">桌面计划与任务时间线应用，用横向时间线组织任务、迷你任务、里程碑与逾期状态。</p><div class="meta"><span>SwiftUI</span><span>macOS</span><span>Windows 规划</span></div></div>
+            <div class="mini-visual"><div class="timeline-art"><i></i><i></i><i></i></div></div>
+          </article>
+          <article class="project-card reveal" id="project-06">
+            <div><div class="index-no">06</div><h3 class="case-title">教室资源看板与预约系统</h3><p class="case-copy">统一管理 5 间教室，同时处理长期班排课与临时使用，动态展示空闲资源。</p><div class="meta"><span>资源看板</span><span>课程排期</span><span>在线预约</span></div></div>
+            <div class="mini-visual"><div class="calendar"><div class="calendar-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
+          </article>
+          <article class="project-card reveal" id="project-07">
+            <div><div class="index-no">07</div><h3 class="case-title">家长会视频管理平台</h3><p class="case-copy">上传、保存和查看家长会录像，为家长提供网页访问，并规划密码与权限管理。</p><div class="meta"><span>视频存储</span><span>访问权限</span><span>网页播放</span></div></div>
+            <div class="mini-visual"><div class="video-screen"><div class="video-controls"></div></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section education" id="education" aria-labelledby="education-title">
+      <div class="shell">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="education-title">教育内容数字化项目</h2>
+          <div class="section-rule" aria-hidden="true"></div>
+          <p class="section-note">把课程方法、知识结构与品牌理念，沉淀为可传播、可复用的数字资源。</p>
+        </div>
+        <div class="education-layout">
+          <nav class="edu-index" aria-label="教育内容项目索引">
+            <a href="#project-08">08 阅读理解技巧知识库</a>
+            <a href="#project-09">09 阅星人学识地图</a>
+            <a href="#project-10">10 阅星人动物 IP 世界观</a>
+            <a href="#project-11">11 中文基础学习工具包</a>
+            <a href="#project-12">12 课程与学习评估体系</a>
+          </nav>
+          <div class="edu-list">
+            <article class="edu-item reveal" id="project-08">
+              <div><div class="index-no">08</div><h3 class="case-title">阅读理解技巧知识库</h3><p class="case-copy">将表格中的阅读理解方法分类整理，制作成清晰、有设计感的卡片式知识网页。</p><div class="meta"><span>知识分类</span><span>网页设计</span><span>学习工具</span></div></div>
+              <div class="edu-media"><div class="skill-cards"><div class="skill-card"><strong>找主旨</strong><i></i></div><div class="skill-card"><strong>理线索</strong><i></i></div><div class="skill-card"><strong>辨细节</strong><i></i></div><div class="skill-card"><strong>联经验</strong><i></i></div></div></div>
+            </article>
+            <article class="edu-item reveal" id="project-09">
+              <div><div class="index-no">09</div><h3 class="case-title">阅星人学识地图</h3><p class="case-copy">展示级别书目、课程内容与学习路径，用可视化网页帮助家长理解课程体系。</p><div class="meta"><span>分级书目</span><span>课程内容</span><span>学习路径</span></div></div>
+              <div class="edu-media"><img src="project-portfolio-assets/knowledge-map.png" alt="由书目、课程和学习目标组成的学识地图"></div>
+            </article>
+            <article class="edu-item reveal" id="project-10">
+              <div><div class="index-no">10</div><h3 class="case-title">阅星人动物 IP 世界观</h3><p class="case-copy">围绕 12 个动物角色整理教育理念与品牌故事，形成完整的 IP 世界观与网页表达。</p><div class="meta"><span>12 个角色</span><span>教育理念</span><span>品牌故事</span></div></div>
+              <div class="edu-media"><div class="animal-book"><div class="animals"><i class="animal"></i><i class="animal"></i><i class="animal"></i><i class="animal"></i></div></div></div>
+            </article>
+            <article class="edu-item reveal" id="project-11">
+              <div><div class="index-no">11</div><h3 class="case-title">中文基础学习工具包</h3><p class="case-copy">整合字词学习工具，以及汉字、读音、常用词、易混字资料和识字卡批量制作。</p><div class="meta"><span>字词</span><span>读音</span><span>辨析</span><span>识字卡</span></div></div>
+              <div class="edu-media"><div class="word-tools"><div class="word-tool">字</div><div class="word-tool">读</div><div class="word-tool">辨</div><div class="word-tool">卡</div></div></div>
+            </article>
+            <article class="edu-item reveal" id="project-12">
+              <div><div class="index-no">12</div><h3 class="case-title">课程与学习评估体系</h3><p class="case-copy">将语文单元目标和考点、阅读课程教案分析与学习评估连接成完整的教学闭环。</p><div class="meta"><span>单元目标</span><span>课程教案</span><span>学习评估</span></div></div>
+              <div class="edu-media"><div class="assessment-flow"><div class="flow-node">单元目标</div><i class="flow-arrow"></i><div class="flow-node">课程教案</div><i class="flow-arrow"></i><div class="flow-node">学习评估</div></div></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="shell closing-grid reveal">
+        <h2>从一个真实问题出发，<br>做一个可以长期使用的答案。</h2>
+        <p>好的教育产品，不是一次性的解决方案，而是能陪伴更多孩子、老师与家长走向更远未来的长期答案。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <div class="footer-copy"><strong>教育产品与数字化实践</strong><small>以优质内容与技术，连接孩子、老师与更大的世界。</small></div>
+      <nav class="footer-links" aria-label="页脚导航"><a href="#top">回到顶部</a><a href="#products">核心产品</a><a href="#education">教育内容</a></nav>
+    </div>
+  </footer>
+
+  <a class="back-top" href="#top" aria-label="回到顶部">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5m0 0L7 10m5-5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+
+  <script>
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealItems = document.querySelectorAll('.reveal');
+    if (reducedMotion || !('IntersectionObserver' in window)) {
+      revealItems.forEach(item => item.classList.add('is-visible'));
+    } else {
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealItems.forEach(item => revealObserver.observe(item));
+    }
+
+    const backTop = document.querySelector('.back-top');
+    const mainNav = [...document.querySelectorAll('.nav a')];
+    const eduLinks = [...document.querySelectorAll('.edu-index a')];
+    const watchedSections = [...document.querySelectorAll('#products, #education, #project-08, #project-09, #project-10, #project-11, #project-12')];
+
+    const syncNavigation = () => {
+      backTop.classList.toggle('is-visible', window.scrollY > 640);
+      let current = '';
+      watchedSections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 180) current = section.id;
+      });
+      mainNav.forEach(link => {
+        const target = link.getAttribute('href').slice(1);
+        link.classList.toggle('is-active', target === current || (target === 'index' && current === 'products'));
+      });
+      eduLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === `#${current}`));
+    };
+
+    window.addEventListener('scroll', syncNavigation, { passive: true });
+    window.addEventListener('resize', syncNavigation);
+    syncNavigation();
+  </script>
+</body>
+</html>

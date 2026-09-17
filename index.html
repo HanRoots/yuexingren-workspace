@@ -1,0 +1,1678 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="汇集家长会视频、教育工具、自建 Skills、公众号文章与项目档案的个人工作台。">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M8 13c9-4 17-2 24 4v35c-7-6-15-8-24-4V13Z' fill='%231166ee'/%3E%3Cpath d='M56 13c-9-4-17-2-24 4v35c7-6 15-8 24-4V13Z' fill='%23ff7a1a'/%3E%3C/svg%3E">
+  <title>阅星人读书社｜内容工作台</title>
+  <style>
+    :root {
+      --navy: #102747;
+      --navy-2: #17365f;
+      --ink: #0a1830;
+      --muted: #667790;
+      --soft: #8c99ad;
+      --line: #dfe6ef;
+      --line-strong: #c8d3e2;
+      --app: #f3f6fa;
+      --surface: #fff;
+      --blue: #1166ee;
+      --blue-dark: #0756d5;
+      --blue-soft: #eaf3ff;
+      --orange: #ff7418;
+      --orange-soft: #fff0e6;
+      --green: #19a675;
+      --green-soft: #e5f8f1;
+      --violet: #7652df;
+      --violet-soft: #f0ebff;
+      --gold: #d99505;
+      --gold-soft: #fff6d9;
+      --shadow: 0 12px 34px rgba(28, 56, 96, .08);
+      --sidebar: 232px;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { height: 100%; }
+    body {
+      min-height: 100%;
+      margin: 0;
+      color: var(--ink);
+      background: var(--app);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, input, select, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    svg { display: block; }
+    ::selection { color: var(--ink); background: #cfe1ff; }
+
+    .icon { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .icon.fill { fill: currentColor; stroke: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .app-shell { min-height: 100vh; display: grid; grid-template-columns: var(--sidebar) minmax(0, 1fr); }
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 30;
+      width: var(--sidebar);
+      display: flex;
+      flex-direction: column;
+      padding: 25px 14px 18px;
+      color: #e9f1fc;
+      background: var(--navy);
+      border-right: 1px solid rgba(255,255,255,.07);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 48px;
+      padding: 0 12px;
+      font-size: 18px;
+      font-weight: 760;
+      letter-spacing: -.02em;
+    }
+    .brand-book { width: 29px; height: 29px; color: #fff; }
+    .side-nav { display: grid; gap: 6px; margin-top: 29px; }
+    .nav-button {
+      width: 100%;
+      min-height: 47px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 8px;
+      color: #cbd7e8;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 580;
+      text-align: left;
+      cursor: pointer;
+      transition: color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .nav-button:hover { color: white; background: rgba(255,255,255,.065); transform: translateX(2px); }
+    .nav-button.is-active { color: white; background: var(--blue); box-shadow: 0 8px 22px rgba(0, 87, 226, .28); }
+    .nav-button .nav-count { margin-left: auto; color: rgba(255,255,255,.6); font-size: 11px; font-variant-numeric: tabular-nums; }
+    .sidebar-bottom { margin-top: auto; border-top: 1px solid rgba(255,255,255,.11); padding: 16px 9px 0; }
+    .sidebar-stat { display: flex; align-items: center; justify-content: space-between; color: #9fb0c8; font-size: 12px; }
+    .manage-link { margin-top: 13px; color: #b8c7da; background: none; border: 0; padding: 0; font-size: 12px; cursor: pointer; }
+    .manage-link:hover { color: white; }
+
+    .mobile-header { display: none; }
+    .workspace { grid-column: 2; min-width: 0; padding: 18px clamp(18px, 2.6vw, 42px) 56px; }
+    .topbar { display: grid; grid-template-columns: minmax(280px, 1fr) auto auto; gap: 12px; align-items: center; max-width: 1280px; margin: 0 auto 18px; }
+    .search-box { position: relative; }
+    .search-box .icon { position: absolute; left: 16px; top: 50%; color: #74859e; transform: translateY(-50%); }
+    .search-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 18px 0 49px;
+      color: var(--ink);
+      background: white;
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      outline: none;
+      font-size: 14px;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    .search-input::placeholder { color: #8996aa; }
+    .search-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(17,102,238,.12); }
+    .action-btn {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 17px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: white;
+      font-size: 13px;
+      font-weight: 680;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .action-btn:hover { transform: translateY(-1px); border-color: #9fb1ca; box-shadow: 0 7px 17px rgba(32,59,100,.07); }
+    .action-btn.primary { color: white; border-color: var(--blue); background: var(--blue); box-shadow: 0 8px 20px rgba(17,102,238,.2); }
+    .action-btn.primary:hover { background: var(--blue-dark); }
+
+    .mobile-categories { display: none; }
+    .workspace-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 294px; gap: 16px; align-items: start; }
+    .main-panel { min-width: 0; }
+    .overview {
+      padding: clamp(22px, 2.7vw, 34px);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 1px 0 rgba(27,52,90,.02);
+    }
+    .overview h1 { margin: 0; font-size: clamp(28px, 2.4vw, 37px); line-height: 1.16; letter-spacing: -.04em; }
+    .overview-copy { max-width: 780px; margin: 9px 0 0; color: var(--muted); font-size: 14px; line-height: 1.72; }
+    .count-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 24px; }
+    .count-button {
+      min-width: 0;
+      height: 62px;
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      align-items: center;
+      gap: 9px;
+      padding: 0 12px;
+      color: var(--muted);
+      background: #f8fafc;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color .18s ease, transform .18s ease, background .18s ease;
+    }
+    .count-button:hover { transform: translateY(-1px); border-color: var(--line-strong); background: white; }
+    .count-button .type-icon { width: 36px; height: 36px; }
+    .count-number { display: block; color: var(--ink); font-size: 20px; font-weight: 760; line-height: 1; font-variant-numeric: tabular-nums; }
+    .count-label { display: block; margin-top: 5px; font-size: 11px; }
+
+    .featured {
+      margin-top: 16px;
+      padding: 21px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .feature-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .feature-title { display: flex; align-items: center; gap: 12px; }
+    .feature-title h2 { margin: 0; font-size: 20px; letter-spacing: -.025em; }
+    .feature-title p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+    .feature-body { display: grid; grid-template-columns: minmax(290px, 1.14fr) minmax(250px, .86fr); gap: 21px; align-items: stretch; margin-top: 17px; }
+    .video-cover {
+      position: relative;
+      min-height: 226px;
+      overflow: hidden;
+      border-radius: 9px;
+      color: white;
+      background: #2d7ad8 url("workspace-assets/parent-meeting-cover.png") center / cover no-repeat;
+      box-shadow: inset 0 0 0 1px rgba(8,45,95,.08);
+    }
+    .cover-copy { position: absolute; inset: 0 auto 0 0; width: 50%; display: flex; flex-direction: column; justify-content: center; padding: 28px; }
+    .cover-copy strong { font-size: clamp(22px, 2.2vw, 31px); line-height: 1.28; letter-spacing: -.035em; text-shadow: 0 1px 6px rgba(0,61,136,.18); }
+    .cover-copy span { margin-top: 11px; font-size: 13px; color: rgba(255,255,255,.88); }
+    .play-button { position: absolute; left: 50%; top: 50%; width: 54px; height: 54px; display: grid; place-items: center; color: white; background: rgba(8,27,54,.7); border: 1px solid rgba(255,255,255,.28); border-radius: 50%; transform: translate(-50%,-50%); }
+    .play-button .icon { width: 23px; height: 23px; margin-left: 3px; fill: currentColor; stroke: none; }
+    .feature-info { display: flex; flex-direction: column; justify-content: center; padding: 10px 4px; }
+    .feature-info .recent-label { color: var(--blue); font-size: 11px; font-weight: 700; }
+    .feature-info h3 { margin: 10px 0 5px; font-size: 20px; letter-spacing: -.025em; }
+    .feature-date { color: var(--soft); font-size: 12px; }
+    .feature-desc { margin: 15px 0 20px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .feature-open { align-self: flex-start; }
+
+    .list-panel { margin-top: 16px; padding: 0 16px 9px; background: white; border: 1px solid var(--line); border-radius: 12px; }
+    .list-head { min-height: 62px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 2px; border-bottom: 1px solid var(--line); }
+    .list-head h2 { margin: 0; font-size: 17px; }
+    .result-count { color: var(--muted); font-size: 12px; }
+    .content-list { display: grid; }
+    .content-row {
+      min-width: 0;
+      min-height: 76px;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) auto 38px;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 7px;
+      border-bottom: 1px solid var(--line);
+      transition: background .16s ease, transform .16s ease;
+    }
+    .content-row:last-child { border-bottom: 0; }
+    .content-row:hover { background: #f7faff; transform: translateX(2px); }
+    .row-main { min-width: 0; cursor: pointer; }
+    .row-title-line { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .row-title { overflow: hidden; font-size: 14px; font-weight: 720; text-overflow: ellipsis; white-space: nowrap; }
+    .open-mark { flex: 0 0 auto; color: var(--blue); }
+    .row-desc { overflow: hidden; margin-top: 5px; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .row-meta { display: flex; align-items: center; gap: 7px; color: var(--soft); font-size: 11px; white-space: nowrap; }
+    .fresh-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
+    .icon-button {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      color: #71829a;
+      background: transparent;
+      border: 0;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: color .16s ease, background .16s ease;
+    }
+    .icon-button:hover { color: var(--blue); background: var(--blue-soft); }
+    .icon-button.is-pinned { color: var(--blue); }
+    .empty-state { padding: 58px 22px; color: var(--muted); text-align: center; }
+    .empty-state strong { display: block; color: var(--ink); font-size: 16px; }
+    .empty-state span { display: block; margin-top: 8px; font-size: 12px; }
+
+    .type-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 9px; }
+    .type-video { color: var(--orange); background: var(--orange-soft); }
+    .type-tool { color: var(--blue); background: var(--blue-soft); }
+    .type-skill { color: var(--violet); background: var(--violet-soft); }
+    .type-article { color: var(--green); background: var(--green-soft); }
+    .type-project { color: var(--gold); background: var(--gold-soft); }
+
+    .right-rail { display: grid; gap: 16px; }
+    .rail-card { padding: 17px; background: white; border: 1px solid var(--line); border-radius: 12px; }
+    .rail-title { display: flex; align-items: center; gap: 9px; margin: 0; padding-bottom: 13px; border-bottom: 1px solid var(--line); font-size: 15px; }
+    .pinned-list { display: grid; }
+    .pinned-item { min-width: 0; min-height: 63px; display: grid; grid-template-columns: 35px minmax(0,1fr) 28px; gap: 10px; align-items: center; border-bottom: 1px solid var(--line); }
+    .pinned-item:last-child { border-bottom: 0; }
+    .pinned-item .type-icon { width: 35px; height: 35px; border-radius: 8px; }
+    .pinned-title { overflow: hidden; font-size: 12px; font-weight: 680; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+    .pinned-type { margin-top: 3px; color: var(--soft); font-size: 10px; }
+    .pin-remove { width: 28px; height: 28px; }
+    .quick-list { display: grid; }
+    .quick-button { min-height: 48px; display: flex; align-items: center; gap: 11px; padding: 0 3px; color: var(--muted); background: transparent; border: 0; border-bottom: 1px solid var(--line); font-size: 12px; cursor: pointer; text-align: left; }
+    .quick-button:last-child { border-bottom: 0; }
+    .quick-button:hover { color: var(--blue); }
+    .quick-button .chevron { margin-left: auto; }
+
+    .mobile-bottom { display: none; }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background: rgba(7, 20, 40, .52);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .18s ease, visibility .18s ease;
+    }
+    .modal-backdrop.is-open { opacity: 1; visibility: visible; }
+    .modal {
+      width: min(100%, 560px);
+      max-height: min(90vh, 720px);
+      overflow: auto;
+      padding: 24px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 30px 80px rgba(4,18,39,.26);
+      transform: translateY(14px) scale(.99);
+      transition: transform .18s ease;
+    }
+    .modal-backdrop.is-open .modal { transform: none; }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .modal-head h2 { margin: 0; font-size: 20px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 22px; }
+    .field { display: grid; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { color: #3a4b65; font-size: 12px; font-weight: 650; }
+    .field input, .field select, .field textarea { width: 100%; color: var(--ink); background: #fbfcfe; border: 1px solid var(--line-strong); border-radius: 8px; outline: none; font-size: 13px; }
+    .field input, .field select { height: 42px; padding: 0 12px; }
+    .field textarea { min-height: 92px; padding: 11px 12px; resize: vertical; line-height: 1.6; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(17,102,238,.1); }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+    .detail-body { margin-top: 20px; }
+    .detail-kicker { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
+    .detail-desc { margin: 19px 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .detail-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .detail-tag { padding: 6px 9px; color: #49607f; background: #f2f5f9; border-radius: 5px; font-size: 11px; }
+    .toast { position: fixed; left: 50%; bottom: 28px; z-index: 130; min-width: 220px; max-width: calc(100vw - 40px); padding: 12px 18px; color: white; background: #13233c; border-radius: 9px; box-shadow: 0 14px 32px rgba(5,19,41,.22); font-size: 12px; text-align: center; opacity: 0; transform: translate(-50%, 14px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+    .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 1120px) {
+      .workspace-grid { grid-template-columns: minmax(0, 1fr) 258px; }
+      .count-button { grid-template-columns: 1fr; height: 72px; text-align: center; }
+      .count-button .type-icon { display: none; }
+      .feature-body { grid-template-columns: 1fr; }
+      .feature-info { display: grid; grid-template-columns: 1fr auto; column-gap: 18px; }
+      .feature-info .recent-label, .feature-info h3, .feature-info .feature-date, .feature-info .feature-desc { grid-column: 1; }
+      .feature-open { grid-column: 2; grid-row: 1 / 5; align-self: center; }
+    }
+
+    @media (max-width: 920px) {
+      .app-shell { display: block; padding-bottom: 70px; }
+      .sidebar { display: none; }
+      .mobile-header { position: sticky; top: 0; z-index: 40; min-height: 62px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 18px; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(14px); }
+      .mobile-brand { display: flex; align-items: center; gap: 9px; font-weight: 760; }
+      .mobile-brand .brand-book { width: 26px; height: 26px; color: var(--blue); }
+      .mobile-actions { display: flex; align-items: center; gap: 8px; }
+      .mobile-add { color: white; background: var(--blue); }
+      .workspace { padding: 14px 16px 28px; }
+      .topbar { grid-template-columns: 1fr auto; margin-bottom: 11px; }
+      .topbar .action-btn { display: none; }
+      .mobile-categories { max-width: 1280px; margin: 0 auto 12px; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+      .mobile-categories::-webkit-scrollbar { display: none; }
+      .category-chip { flex: 0 0 auto; min-height: 39px; padding: 0 17px; color: #4b5d77; background: white; border: 1px solid var(--line); border-radius: 8px; font-size: 12px; font-weight: 650; cursor: pointer; }
+      .category-chip.is-active { color: white; border-color: var(--blue); background: var(--blue); }
+      .workspace-grid { grid-template-columns: 1fr; }
+      .right-rail { display: none; }
+      .mobile-bottom { position: fixed; inset: auto 0 0; z-index: 50; height: 66px; display: grid; grid-template-columns: repeat(4, 1fr); padding-bottom: env(safe-area-inset-bottom); background: rgba(255,255,255,.96); border-top: 1px solid var(--line); backdrop-filter: blur(15px); }
+      .bottom-button { display: grid; place-items: center; align-content: center; gap: 4px; color: #60718a; background: none; border: 0; font-size: 10px; cursor: pointer; }
+      .bottom-button .icon { width: 20px; height: 20px; }
+      .bottom-button.is-active { color: var(--blue); }
+      .toast { bottom: 82px; }
+    }
+
+    @media (max-width: 620px) {
+      .workspace { padding-inline: 12px; }
+      .overview { padding: 22px 18px; }
+      .overview h1 { font-size: 29px; }
+      .overview-copy { display: none; }
+      .count-strip { display: flex; gap: 7px; overflow-x: auto; margin-top: 16px; padding-bottom: 2px; scrollbar-width: none; }
+      .count-strip::-webkit-scrollbar { display: none; }
+      .count-button { flex: 0 0 92px; height: 58px; display: block; padding: 10px 12px; text-align: left; }
+      .count-number { font-size: 18px; }
+      .count-label { margin-top: 4px; }
+      .featured { padding: 17px; }
+      .feature-title h2 { font-size: 18px; }
+      .feature-body { gap: 14px; }
+      .video-cover { min-height: 190px; }
+      .cover-copy { width: 61%; padding: 21px; }
+      .cover-copy strong { font-size: 23px; }
+      .feature-info { display: block; padding: 2px 0 0; }
+      .feature-desc, .feature-info .recent-label, .feature-info .feature-date { display: none; }
+      .feature-info h3 { margin: 0 0 13px; font-size: 16px; }
+      .content-row { grid-template-columns: 42px minmax(0,1fr) 36px; gap: 10px; }
+      .row-meta { grid-column: 2; margin-top: -4px; }
+      .content-row > .icon-button { grid-column: 3; grid-row: 1; }
+      .row-desc { white-space: normal; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .modal { padding: 20px; }
+    }
+
+    /* Accepted 阅星人 light workspace design */
+    @font-face {
+      font-family: "MiSans Local";
+      src: url("workspace-assets/MiSans-Regular.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "MiSans Latin Local";
+      src: url("workspace-assets/MiSansLatin-Regular.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    :root {
+      --navy: #102986;
+      --navy-deep: #081f6d;
+      --navy-soft: #2346a9;
+      --ink: #0d287c;
+      --muted: #5f70a2;
+      --soft: #8694bc;
+      --line: #dbe6f5;
+      --line-strong: #c5d6ee;
+      --app: #ffffff;
+      --surface: #ffffff;
+      --blue: #0f69d8;
+      --blue-dark: #0a4fa7;
+      --blue-soft: #eef7ff;
+      --lime: #a8dc13;
+      --lime-dark: #78ab00;
+      --lime-soft: #f3fbdc;
+      --yellow: #ffe538;
+      --sky: #70cef3;
+      --green: #26b948;
+      --green-soft: #ecf9e8;
+      --shadow: 0 14px 36px rgba(16, 41, 134, .07);
+      --sidebar: 242px;
+      --sans: "MiSans Local", "Microsoft YaHei", "微软雅黑", "PingFang SC", Arial, sans-serif;
+      --latin: "MiSans Latin Local", "MiSans Local", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    html { background: #fff; }
+    body {
+      color: var(--ink);
+      background: #fff;
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+    ::selection { color: var(--navy-deep); background: #e4f7a8; }
+    .latin, time, .count-number, .nav-count, .feature-date, .overview-eyebrow { font-family: var(--latin); }
+    .app-shell { background: #fff; grid-template-columns: var(--sidebar) minmax(0, 1fr); }
+
+    .sidebar {
+      width: var(--sidebar);
+      padding: 22px 14px 22px;
+      color: #fff;
+      background: var(--navy);
+      border-right: 0;
+    }
+    .brand {
+      min-height: 58px;
+      gap: 10px;
+      padding: 0 8px;
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+    .brand::before, .mobile-brand::before { content: none; display: none; }
+    .logo-mark {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      overflow: hidden;
+      border-radius: 13px;
+      background: #fff;
+    }
+    .logo-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .side-nav { gap: 5px; margin-top: 32px; }
+    .nav-button {
+      min-height: 52px;
+      gap: 13px;
+      padding: 0 14px;
+      color: rgba(255,255,255,.82);
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .nav-button:hover { color: #fff; background: rgba(255,255,255,.08); transform: none; }
+    .nav-button.is-active {
+      color: var(--navy-deep);
+      background: var(--lime);
+      border-color: rgba(255,255,255,.35);
+      box-shadow: none;
+    }
+    .nav-button.is-active .icon { color: var(--navy-deep); }
+    .nav-button .nav-count,
+    .nav-button.is-active .nav-count { margin-left: auto; color: currentColor; font-size: 13px; opacity: .88; }
+    .sidebar-bottom { padding: 18px 13px 0; border-top: 0; }
+    .sidebar-bottom::before { content: none; display: none; }
+    .sidebar-stat {
+      display: grid;
+      justify-content: start;
+      gap: 5px;
+      color: rgba(255,255,255,.8);
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .sidebar-stat span:first-child { font-family: var(--latin); }
+    .manage-link { margin-top: 13px; color: rgba(255,255,255,.66); font-family: var(--sans); font-size: 12px; letter-spacing: 0; }
+    .manage-link:hover { color: #fff; }
+
+    .workspace { padding: 20px clamp(24px, 2.7vw, 42px) 56px; background: #fff; }
+    .topbar {
+      max-width: 1240px;
+      grid-template-columns: minmax(280px, 380px) auto auto;
+      justify-content: end;
+      gap: 12px;
+      margin: 0 auto 22px;
+    }
+    .search-input {
+      height: 46px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      border-radius: 13px;
+      font-family: var(--sans);
+      font-size: 13px;
+    }
+    .search-input::placeholder { color: #7e8eb9; }
+    .search-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(15,105,216,.12); }
+    .search-box .icon { color: var(--navy); }
+    .action-btn {
+      min-height: 46px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      border-radius: 13px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .action-btn:hover { color: var(--ink); background: #f8fbff; border-color: #a9bee0; box-shadow: 0 7px 18px rgba(16,41,134,.07); }
+    .topbar .action-btn.primary, .action-btn.primary {
+      display: inline-flex;
+      color: var(--navy-deep);
+      background: var(--lime);
+      border-color: var(--lime);
+      box-shadow: none;
+    }
+    .action-btn.primary:hover { color: var(--navy-deep); background: #b7e72c; border-color: #b7e72c; }
+
+    .workspace-grid { max-width: 1240px; grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .overview {
+      padding: 0;
+      background: #fff;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .hero-grid {
+      min-height: 244px;
+      display: grid;
+      grid-template-columns: minmax(360px, .82fr) minmax(470px, 1.18fr);
+      align-items: center;
+      gap: clamp(28px, 4vw, 64px);
+    }
+    .hero-visual { min-width: 0; align-self: stretch; display: flex; align-items: center; }
+    .hero-visual img {
+      width: 100%;
+      max-height: 270px;
+      object-fit: contain;
+      object-position: center;
+    }
+    .hero-copy { padding: 13px 0 10px; }
+    .overview-eyebrow {
+      display: block;
+      margin: 0 0 22px;
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .23em;
+    }
+    .overview h1 {
+      max-width: 720px;
+      margin: 0;
+      color: var(--navy);
+      font-family: var(--sans);
+      font-size: clamp(42px, 4.35vw, 68px);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -.045em;
+    }
+    .overview-copy {
+      display: block;
+      max-width: 720px;
+      margin: 20px 0 0;
+      color: #405996;
+      font-size: clamp(14px, 1.3vw, 18px);
+      line-height: 1.75;
+    }
+    .action-btn.hero-add { display: none; }
+    .count-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 11px;
+      margin-top: 18px;
+    }
+    .count-button {
+      position: relative;
+      height: 90px;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      overflow: hidden;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      border-radius: 13px;
+      text-align: left;
+    }
+    .count-button::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 3px;
+      height: 100%;
+      background: transparent;
+    }
+    .count-button:hover { color: var(--ink); background: #fbfdff; border-color: #93afd8; transform: translateY(-2px); }
+    .count-button.is-active { border-color: var(--lime-dark); background: var(--lime-soft); box-shadow: inset 0 0 0 1px var(--lime-dark); }
+    .count-button.is-active::after { background: var(--lime); }
+    .count-button .type-icon { width: 42px; height: 42px; color: var(--navy); background: transparent; }
+    .count-number { color: var(--lime-dark); font-size: 31px; font-weight: 400; line-height: 1; }
+    .count-label { margin-top: 6px; color: var(--ink); font-size: 12px; font-weight: 600; }
+
+    .featured {
+      margin-top: 16px;
+      padding: 0;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+    .feature-head { min-height: 70px; padding: 0 18px; border-bottom: 1px solid var(--line); }
+    .feature-title .type-icon { color: var(--navy); background: #eaf4ff; }
+    .feature-title h2 { color: var(--navy); font-family: var(--sans); font-size: 22px; font-weight: 800; }
+    .feature-title p { color: var(--muted); font-size: 12px; }
+    .feature-body { grid-template-columns: minmax(470px, 1.35fr) minmax(300px, .65fr); gap: 0; margin: 0; }
+    .video-cover {
+      min-height: 270px;
+      border-radius: 0;
+      background-color: #071842;
+      background-image: url("workspace-assets/parent-meeting-night.png");
+      box-shadow: none;
+    }
+    .cover-copy { z-index: 1; width: 52%; padding: 30px; }
+    .cover-copy span { order: 0; margin: 0 0 10px; color: #fff; font-family: var(--sans); font-size: 14px; }
+    .cover-copy strong { order: 1; color: #fff; font-family: var(--sans); font-size: clamp(31px, 3.1vw, 45px); font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,.28); }
+    .play-button { z-index: 2; left: 50%; top: 50%; right: auto; bottom: auto; width: 60px; height: 60px; color: #fff; background: rgba(7,24,66,.52); border: 2px solid rgba(255,255,255,.9); transform: translate(-50%,-50%); }
+    .feature-info { padding: 26px 30px; border-left: 1px solid var(--line); }
+    .feature-info .recent-label { color: var(--lime-dark); font-family: var(--sans); font-size: 12px; letter-spacing: 0; text-transform: none; }
+    .feature-info h3 { margin: 11px 0 6px; color: var(--navy); font-family: var(--sans); font-size: 27px; font-weight: 800; line-height: 1.25; letter-spacing: -.025em; white-space: nowrap; }
+    .feature-date { color: var(--soft); font-size: 13px; }
+    .feature-desc { margin: 14px 0 17px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+
+    .video-directory {
+      display: grid;
+      grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr);
+      gap: 22px;
+      padding: 20px;
+    }
+    .video-group { min-width: 0; }
+    .video-group-label {
+      display: block;
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .collection-link {
+      min-height: 224px;
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) 22px;
+      align-items: center;
+      gap: 14px;
+      padding: 22px;
+      color: var(--navy);
+      background: var(--lime-soft);
+      border: 1px solid #cce87b;
+      border-radius: 13px;
+      transition: border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .collection-link:hover {
+      background: #eef9c7;
+      border-color: var(--lime-dark);
+      transform: translateY(-2px);
+    }
+    .collection-link strong { font-size: 18px; line-height: 1.45; }
+    .directory-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      color: var(--navy);
+      background: #fff;
+      border-radius: 12px;
+    }
+    .directory-icon .icon { width: 23px; height: 23px; }
+    .directory-arrow { width: 20px; height: 20px; color: var(--navy); }
+    .video-link-list {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+    }
+    .video-link-list a {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 15px;
+      color: var(--ink);
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 600;
+      transition: color .16s ease, background .16s ease, padding .16s ease;
+    }
+    .video-link-list a:last-child { border-bottom: 0; }
+    .video-link-list a:hover { color: var(--blue-dark); background: #f7fbff; padding-left: 18px; }
+    .video-link-list .icon { width: 17px; height: 17px; flex: 0 0 17px; color: var(--soft); }
+
+    .list-panel { position: relative; margin-top: 16px; padding: 0; background: #fff; border: 0; border-radius: 0; }
+    .list-head { min-height: 68px; padding: 0; border-bottom: 1px solid var(--line-strong); }
+    .list-head h2 { color: var(--navy); font-family: var(--sans); font-size: 25px; font-weight: 800; }
+    .list-tools { position: relative; display: flex; align-items: center; gap: 12px; }
+    .result-count { color: var(--muted); font-family: var(--latin); font-size: 12px; }
+    .filter-toggle {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 14px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      border-radius: 11px;
+      font-family: var(--sans);
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .filter-toggle .icon { width: 17px; height: 17px; }
+    .filter-menu {
+      position: absolute;
+      z-index: 20;
+      right: 0;
+      top: 45px;
+      width: 172px;
+      padding: 7px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 18px 42px rgba(16,41,134,.14);
+    }
+    .filter-menu[hidden] { display: none; }
+    .filter-menu button {
+      width: 100%;
+      min-height: 39px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 10px;
+      color: var(--ink);
+      background: transparent;
+      border: 0;
+      border-radius: 8px;
+      font-family: var(--sans);
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .filter-menu button:hover { background: var(--lime-soft); }
+    .filter-menu .icon { width: 16px; height: 16px; }
+    .content-list { display: grid; }
+    .content-row {
+      min-height: 59px;
+      grid-template-columns: 36px minmax(0, 1fr) 122px 106px 104px 36px;
+      gap: 10px;
+      padding: 9px 4px;
+      border-bottom: 1px solid var(--line);
+    }
+    .content-row:hover { background: #f8fbff; transform: none; }
+    .content-row .type-icon { width: 34px; height: 34px; border-radius: 9px; }
+    .row-title { color: var(--ink); font-size: 13px; font-weight: 700; }
+    .row-desc { display: none; }
+    .row-type { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .row-status {
+      justify-self: start;
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 10px;
+      color: var(--ink);
+      background: #f5f8fd;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .row-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--sky); }
+    .row-status.status-published::before, .row-status.status-ready::before { background: var(--green); }
+    .row-status.status-iterating::before { background: var(--lime); }
+    .row-status.status-planning::before { background: var(--yellow); }
+    .row-meta { color: var(--muted); font-family: var(--latin); font-size: 12px; }
+    .row-meta .fresh-dot, .row-meta .meta-type { display: none; }
+    .open-mark { color: var(--blue); }
+    .icon-button { color: var(--soft); }
+    .icon-button:hover { color: var(--navy); background: var(--blue-soft); }
+    .icon-button.is-pinned { color: var(--lime-dark); }
+    .type-video, .type-tool, .type-skill, .type-article, .type-project { color: var(--navy); background: #eef6ff; }
+    .empty-state strong { color: var(--ink); }
+
+    .archive-banner {
+      width: 100%;
+      min-height: 82px;
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 15px;
+      margin-top: 12px;
+      padding: 14px 20px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      text-align: left;
+      cursor: pointer;
+    }
+    .archive-banner:hover { background: #fbfdff; border-color: #adc3e3; }
+    .archive-icon { width: 46px; height: 46px; display: grid; place-items: center; color: var(--navy); background: var(--lime-soft); border-radius: 11px; }
+    .archive-banner strong { display: block; color: var(--navy); font-size: 17px; }
+    .archive-banner small { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; }
+    .archive-open { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; }
+    .archive-open .icon { width: 17px; height: 17px; }
+    .right-rail { display: none; }
+
+    .modal-backdrop { background: rgba(8,31,109,.42); }
+    .modal {
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 28px 80px rgba(8,31,109,.24);
+    }
+    .modal-head h2 { color: var(--navy); font-family: var(--sans); font-size: 22px; font-weight: 800; }
+    .field label { color: var(--ink); }
+    .field input, .field select, .field textarea { color: var(--ink); background: #fbfdff; border-color: var(--line-strong); font-family: var(--sans); }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(15,105,216,.1); }
+    .detail-kicker, .detail-desc { color: var(--muted); }
+    .detail-tag { color: var(--ink); background: var(--blue-soft); }
+    .entry-note {
+      margin: 18px 0 0;
+      padding: 12px 14px;
+      color: var(--muted);
+      background: #f7faff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .toast { color: #fff; background: var(--navy-deep); border-radius: 10px; }
+
+    @media (max-width: 1120px) {
+      .hero-grid { grid-template-columns: minmax(320px, .8fr) minmax(420px, 1.2fr); gap: 28px; }
+      .overview h1 { font-size: clamp(40px, 5.2vw, 58px); }
+      .count-button { grid-template-columns: 1fr; height: 86px; text-align: center; }
+      .count-button .type-icon { display: none; }
+      .feature-body { grid-template-columns: 1.15fr .85fr; }
+      .feature-info { display: flex; }
+      .feature-open { align-self: flex-start; }
+    }
+
+    @media (max-width: 920px) {
+      .app-shell { display: block; padding-bottom: 74px; background: #fff; }
+      .sidebar { display: none; }
+      .mobile-header {
+        min-height: 72px;
+        color: var(--navy);
+        background: rgba(255,255,255,.96);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(16px);
+      }
+      .mobile-brand { gap: 9px; color: var(--navy); font-family: var(--sans); font-size: 17px; font-weight: 800; }
+      .mobile-brand .logo-mark { width: 42px; height: 42px; flex-basis: 42px; border-radius: 11px; }
+      .mobile-brand .logo-mark img { width: 100%; }
+      .mobile-actions .icon-button { width: 42px; height: 42px; color: var(--navy); border: 1px solid var(--line); border-radius: 50%; }
+      .mobile-actions .mobile-add { color: var(--navy-deep); background: var(--lime); border-color: var(--lime); }
+      .workspace { padding: 20px 18px 28px; }
+      .topbar { display: none; position: sticky; top: 82px; z-index: 35; grid-template-columns: 1fr; margin-bottom: 14px; }
+      .topbar.is-mobile-open { display: grid; }
+      .topbar .action-btn { display: none; }
+      .mobile-categories { display: none; }
+      .workspace-grid { grid-template-columns: 1fr; }
+      .hero-grid { min-height: 420px; position: relative; display: block; overflow: hidden; }
+      .hero-copy { position: relative; z-index: 2; width: 64%; padding: 8px 0 0; }
+      .hero-visual { position: absolute; z-index: 1; right: -6%; bottom: 2px; width: 66%; height: 74%; display: block; }
+      .hero-visual img { width: 100%; height: 100%; max-height: none; object-fit: contain; object-position: right bottom; }
+      .overview-eyebrow { margin-bottom: 18px; font-size: 10px; letter-spacing: .18em; white-space: nowrap; }
+      .overview h1 { max-width: 330px; font-size: clamp(39px, 10.5vw, 55px); line-height: 1.17; }
+      .overview-copy { max-width: 285px; margin-top: 18px; font-size: 14px; line-height: 1.68; }
+      .action-btn.hero-add { display: inline-flex; margin-top: 20px; }
+      .count-strip { display: flex; gap: 10px; overflow-x: auto; margin-top: 14px; padding: 0 1px 4px; scrollbar-width: none; }
+      .count-strip::-webkit-scrollbar { display: none; }
+      .count-button { flex: 0 0 104px; height: 104px; display: block; padding: 16px 13px; text-align: left; }
+      .count-button .type-icon { display: block; width: 28px; height: 28px; margin-bottom: 5px; }
+      .count-number { font-size: 27px; }
+      .count-label { font-size: 12px; }
+      .feature-body { grid-template-columns: 1fr; }
+      .feature-info { display: block; border-left: 0; border-top: 1px solid var(--line); }
+      .feature-open { align-self: flex-start; }
+      .video-directory { grid-template-columns: 1fr; gap: 17px; padding: 17px; }
+      .collection-link { min-height: 82px; padding: 16px; }
+      .right-rail { display: none; }
+      .mobile-bottom { height: 72px; background: rgba(255,255,255,.97); border-top-color: var(--line); backdrop-filter: blur(18px); }
+      .bottom-button { color: var(--muted); font-family: var(--sans); }
+      .bottom-button.is-active { color: var(--lime-dark); }
+      .content-row { grid-template-columns: 38px minmax(0,1fr) 36px; min-height: 72px; padding: 10px 3px; }
+      .row-desc { display: block; }
+      .row-type, .row-status { display: none; }
+      .row-meta { grid-column: 2; margin-top: -7px; }
+      .content-row > .icon-button { grid-column: 3; grid-row: 1; }
+      .archive-banner { margin-bottom: 16px; }
+      .toast { bottom: 84px; }
+    }
+
+    @media (max-width: 620px) {
+      .workspace { padding-inline: 14px; }
+      .hero-grid { min-height: 415px; }
+      .hero-copy { width: 66%; }
+      .hero-visual { right: -10%; bottom: -2px; width: 72%; height: 72%; }
+      .overview-eyebrow { margin-bottom: 16px; font-size: 9px; }
+      .overview h1 { font-size: clamp(38px, 10.8vw, 48px); letter-spacing: -.045em; }
+      .overview-copy { max-width: 250px; font-size: 13px; }
+      .hero-add { min-height: 46px; padding-inline: 18px; border-radius: 999px; }
+      .featured { margin-top: 15px; }
+      .feature-head { min-height: 68px; padding: 0 15px; }
+      .feature-title h2 { font-size: 19px; }
+      .video-cover { min-height: 220px; }
+      .cover-copy { width: 62%; padding: 22px; }
+      .cover-copy strong { font-size: 30px; }
+      .feature-info { padding: 19px 20px 21px; }
+      .feature-info .recent-label, .feature-desc { display: none; }
+      .feature-info h3 { margin-top: 0; font-size: 22px; white-space: normal; }
+      .feature-open { float: right; margin-top: -42px; min-height: 40px; border-radius: 999px; }
+      .video-link-list a { min-height: 48px; padding-inline: 14px; font-size: 13px; }
+      .list-head h2 { font-size: 23px; }
+      .result-count { display: none; }
+      .archive-banner { grid-template-columns: 42px minmax(0, 1fr); padding: 13px 15px; }
+      .archive-open { display: none; }
+      .archive-banner small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .modal { padding: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+
+    @supports not (display: grid) {
+    /* Legacy dark concept retained for reference but intentionally disabled. */
+    /* Origin-inspired midnight gallery layer */
+    :root {
+      --navy: #090a0b;
+      --navy-2: #0f1011;
+      --ink: #f5f5f7;
+      --muted: #9f9fa0;
+      --soft: #6a6b6b;
+      --line: #2e2e2e;
+      --line-strong: #3f4041;
+      --app: #0f1011;
+      --surface: #090a0b;
+      --blue: #847dff;
+      --blue-dark: #d1c9ff;
+      --blue-soft: rgba(132,125,255,.13);
+      --orange: #dd90d8;
+      --orange-soft: rgba(221,144,216,.12);
+      --green: #00b3dd;
+      --green-soft: rgba(0,179,221,.12);
+      --violet: #dd90d8;
+      --violet-soft: rgba(221,144,216,.12);
+      --gold: #90b8f0;
+      --gold-soft: rgba(144,184,240,.12);
+      --shadow: none;
+      --sidebar: 228px;
+      --serif: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    body { background: #0f1011; }
+    ::selection { color: #090a0b; background: #d1c9ff; }
+    .app-shell { background: #0f1011; }
+    .sidebar {
+      padding: 25px 14px 20px;
+      color: #f5f5f7;
+      background: #090a0b;
+      border-right-color: #252627;
+    }
+    .brand { gap: 13px; padding: 0 15px; font-size: 16px; font-weight: 620; }
+    .brand::before {
+      content: "C";
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #f5f5f7;
+      border-radius: 50%;
+      font-family: Georgia, serif;
+      font-size: 24px;
+      line-height: 1;
+    }
+    .brand-book { display: none; }
+    .side-nav { gap: 5px; margin-top: 37px; }
+    .nav-button {
+      min-height: 47px;
+      color: #9f9fa0;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .nav-button:hover { color: #fff; background: #161719; transform: none; }
+    .nav-button.is-active {
+      color: #fff;
+      background: rgba(132,125,255,.15);
+      box-shadow: inset 2px 0 #847dff;
+    }
+    .nav-button.is-active .icon { color: #847dff; }
+    .nav-button .nav-count { color: #6a6b6b; font-family: var(--mono); }
+    .nav-button.is-active .nav-count { color: #d1c9ff; }
+    .sidebar-bottom { border-top: 0; padding: 18px 14px 0; }
+    .sidebar-bottom::before { content: "BUILD A BRIGHTER YOU"; display: block; max-width: 90px; margin-bottom: 16px; color: #6a6b6b; font-family: var(--mono); font-size: 9px; line-height: 1.6; letter-spacing: .17em; }
+    .sidebar-stat { color: #6a6b6b; font-family: var(--mono); font-size: 9px; letter-spacing: .06em; }
+    .manage-link { color: #9f9fa0; font-family: var(--mono); font-size: 10px; letter-spacing: .06em; }
+
+    .workspace { padding: 24px clamp(24px, 3.4vw, 56px) 72px; }
+    .topbar { grid-template-columns: minmax(280px, 380px) auto; justify-content: end; max-width: 1240px; margin-bottom: 54px; }
+    .topbar .action-btn.primary { display: none; }
+    .search-input {
+      height: 42px;
+      color: #f5f5f7;
+      background: #121315;
+      border-color: #3f4041;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    .search-input::placeholder { color: #6a6b6b; }
+    .search-input:focus { border-color: #847dff; box-shadow: 0 0 0 3px rgba(132,125,255,.12); }
+    .search-box .icon { color: #9f9fa0; }
+    .action-btn {
+      min-height: 42px;
+      color: #cacaca;
+      background: transparent;
+      border-color: #3f4041;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 560;
+    }
+    .action-btn:hover { color: #fff; background: #191a1c; border-color: #6a6b6b; box-shadow: none; }
+    .action-btn.primary {
+      color: #090a0b;
+      border-color: #f5f5f7;
+      background: #f5f5f7;
+      box-shadow: none;
+    }
+    .action-btn.primary:hover { color: #090a0b; background: #d1c9ff; border-color: #d1c9ff; }
+
+    .workspace-grid { max-width: 1240px; grid-template-columns: 1fr; gap: 18px; }
+    .overview {
+      position: relative;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+    }
+    .overview-eyebrow {
+      display: block;
+      margin-bottom: 24px;
+      color: #9f9fa0;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .14em;
+    }
+    .overview-heading { display: flex; align-items: end; justify-content: space-between; gap: 28px; }
+    .overview-heading .action-btn { flex: 0 0 auto; margin-bottom: 7px; }
+    .overview h1 {
+      max-width: 900px;
+      font-family: var(--serif);
+      font-size: clamp(60px, 6.1vw, 96px);
+      font-weight: 300;
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+    .overview-copy { max-width: 700px; margin-top: 23px; color: #9f9fa0; font-size: 15px; line-height: 1.7; }
+    .count-strip { gap: 12px; margin-top: 42px; }
+    .count-button {
+      position: relative;
+      height: 108px;
+      grid-template-columns: 38px 1fr;
+      color: #d1c9ff;
+      background: #141322;
+      border-color: rgba(132,125,255,.65);
+      border-radius: 8px;
+      padding: 18px;
+      overflow: hidden;
+    }
+    .count-button:nth-child(2) { color: #72ddf3; background: #0e2025; border-color: rgba(0,179,221,.65); }
+    .count-button:nth-child(3) { color: #f0a5eb; background: #221521; border-color: rgba(221,144,216,.65); }
+    .count-button:nth-child(4) { color: #abc8ff; background: #111a2e; border-color: rgba(144,184,240,.65); }
+    .count-button:nth-child(5) { color: #cacaca; background: #161719; border-color: #3f4041; }
+    .count-button::after { content: "→"; position: absolute; right: 14px; bottom: 12px; font-size: 15px; }
+    .count-button:hover { background: #1b1c1e; border-color: currentColor; transform: translateY(-2px); }
+    .count-button .type-icon { width: 36px; height: 36px; color: currentColor; background: transparent; }
+    .count-number { color: currentColor; font-family: var(--serif); font-size: 33px; font-weight: 300; }
+    .count-label { color: currentColor; font-size: 11px; font-weight: 560; }
+
+    .featured {
+      margin-top: 20px;
+      padding: 0;
+      overflow: hidden;
+      background: #090a0b;
+      border-color: #2e2e2e;
+      border-radius: 8px;
+    }
+    .feature-head { min-height: 68px; padding: 0 20px; border-bottom: 1px solid #2e2e2e; }
+    .feature-title .type-icon { color: #847dff; background: rgba(132,125,255,.12); }
+    .feature-title h2 { font-family: var(--serif); font-size: 24px; font-weight: 300; }
+    .feature-title p { color: #6a6b6b; }
+    .feature-body { grid-template-columns: minmax(430px, 1.25fr) minmax(310px, .75fr); gap: 0; margin: 0; }
+    .video-cover {
+      min-height: 320px;
+      display: block;
+      width: 100%;
+      border-radius: 0;
+      background-color: #090a0b;
+      background-image: url("workspace-assets/parent-meeting-night.png");
+      box-shadow: none;
+    }
+    .cover-copy { z-index: 1; width: 48%; padding: 32px; }
+    .cover-copy strong { font-family: var(--serif); font-size: clamp(30px, 3vw, 44px); font-weight: 300; text-shadow: none; }
+    .cover-copy span { color: #cacaca; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; }
+    .play-button { z-index: 2; left: auto; right: 24px; top: auto; bottom: 24px; width: 48px; height: 48px; color: #090a0b; background: #f5f5f7; border: 0; transform: none; }
+    .feature-info { padding: 34px; border-left: 1px solid #2e2e2e; }
+    .feature-info .recent-label { color: #847dff; font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+    .feature-info h3 { margin-top: 15px; font-family: var(--serif); font-size: 31px; font-weight: 300; }
+    .feature-date { color: #6a6b6b; font-family: var(--mono); }
+    .feature-desc { color: #9f9fa0; }
+
+    .list-panel { margin-top: 20px; padding: 0; background: transparent; border: 0; border-radius: 0; }
+    .list-head { min-height: 68px; border-bottom-color: #3f4041; }
+    .list-head h2 { font-family: var(--serif); font-size: 26px; font-weight: 300; }
+    .result-count { color: #6a6b6b; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; }
+    .content-row { min-height: 77px; padding: 12px 8px; border-bottom-color: #252627; }
+    .content-row:hover { background: #151618; transform: none; }
+    .row-title { color: #f5f5f7; font-size: 14px; font-weight: 560; }
+    .row-desc { color: #6a6b6b; }
+    .row-meta { color: #6a6b6b; font-family: var(--mono); font-size: 10px; }
+    .open-mark { color: #847dff; }
+    .icon-button { color: #6a6b6b; }
+    .icon-button:hover { color: #d1c9ff; background: rgba(132,125,255,.1); }
+    .icon-button.is-pinned { color: #847dff; }
+    .type-icon { border-radius: 7px; }
+    .type-video { color: #a99fff; background: rgba(132,125,255,.14); }
+    .type-tool { color: #72ddf3; background: rgba(0,179,221,.13); }
+    .type-skill { color: #f0a5eb; background: rgba(221,144,216,.13); }
+    .type-article { color: #abc8ff; background: rgba(144,184,240,.13); }
+    .type-project { color: #cacaca; background: #232426; }
+    .fresh-dot { background: #dd90d8; }
+    .empty-state strong { color: #f5f5f7; }
+
+    .right-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 22px; }
+    .rail-card { padding: 20px; background: #090a0b; border-color: #2e2e2e; border-radius: 8px; }
+    .rail-title { color: #cacaca; border-bottom-color: #2e2e2e; font-family: var(--serif); font-size: 18px; font-weight: 300; }
+    .pinned-list { grid-template-columns: repeat(2, minmax(0,1fr)); column-gap: 18px; }
+    .pinned-item, .quick-button { border-bottom-color: #252627; }
+    .pinned-title { color: #cacaca; }
+    .pinned-type { color: #6a6b6b; }
+    .quick-button { color: #9f9fa0; }
+    .quick-button:hover { color: #d1c9ff; }
+
+    .modal-backdrop { background: rgba(0,0,0,.78); }
+    .modal { color: #f5f5f7; background: #111214; border: 1px solid #3f4041; border-radius: 8px; box-shadow: 0 32px 80px rgba(0,0,0,.5); }
+    .modal-head h2 { font-family: var(--serif); font-size: 26px; font-weight: 300; }
+    .field label { color: #cacaca; }
+    .field input, .field select, .field textarea { color: #f5f5f7; background: #090a0b; border-color: #3f4041; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: #847dff; box-shadow: 0 0 0 3px rgba(132,125,255,.12); }
+    .detail-kicker, .detail-desc { color: #9f9fa0; }
+    .detail-tag { color: #cacaca; background: #232426; }
+    .toast { background: #f5f5f7; color: #090a0b; border-radius: 8px; }
+
+    @media (max-width: 1120px) {
+      .workspace-grid { grid-template-columns: 1fr; }
+      .count-button { grid-template-columns: 1fr; }
+      .feature-body { grid-template-columns: 1fr 1fr; }
+      .feature-info { display: flex; }
+      .feature-open { align-self: flex-start; }
+    }
+
+    @media (max-width: 920px) {
+      .app-shell { background: #090a0b; }
+      .mobile-header { min-height: 68px; color: #f5f5f7; background: rgba(9,10,11,.94); border-bottom-color: #252627; backdrop-filter: blur(16px); }
+      .mobile-brand { font-size: 15px; font-weight: 560; }
+      .mobile-brand::before { content: "C"; width: 32px; height: 32px; display: grid; place-items: center; border: 2px solid #f5f5f7; border-radius: 50%; font-family: Georgia, serif; font-size: 20px; }
+      .mobile-brand .brand-book { display: none; }
+      .mobile-add { color: #090a0b; background: #f5f5f7; }
+      .workspace { padding: 28px 18px 34px; }
+      .topbar { grid-template-columns: 1fr auto; margin-bottom: 30px; }
+      .mobile-categories { margin-bottom: 28px; gap: 8px; }
+      .category-chip { min-height: 36px; color: #9f9fa0; background: #111214; border-color: #3f4041; border-radius: 8px; }
+      .category-chip.is-active { color: #090a0b; border-color: #f5f5f7; background: #f5f5f7; }
+      .right-rail { display: none; }
+      .mobile-bottom { height: 70px; background: rgba(9,10,11,.96); border-top-color: #2e2e2e; backdrop-filter: blur(18px); }
+      .bottom-button { color: #6a6b6b; }
+      .bottom-button.is-active { color: #f5f5f7; }
+    }
+
+    @media (max-width: 620px) {
+      .workspace { padding-inline: 16px; }
+      .topbar { margin-bottom: 34px; }
+      .topbar .action-btn { display: none; }
+      .overview { padding: 0; }
+      .overview-eyebrow { margin-bottom: 20px; font-size: 9px; }
+      .overview-heading { display: block; }
+      .overview-heading .action-btn { display: inline-flex; margin: 26px 0 0; }
+      .overview h1 { max-width: 340px; font-size: clamp(52px, 16vw, 66px); line-height: 1.03; }
+      .overview-copy { display: block; margin-top: 18px; font-size: 14px; line-height: 1.65; }
+      .count-strip { margin-top: 32px; gap: 10px; }
+      .count-button { flex-basis: 142px; height: 92px; padding: 15px; }
+      .count-button::after { right: 11px; bottom: 10px; }
+      .count-number { font-size: 27px; }
+      .featured { margin-top: 16px; padding: 0; }
+      .feature-head { min-height: 64px; padding: 0 15px; }
+      .feature-title h2 { font-size: 20px; }
+      .feature-body { display: block; }
+      .video-cover { min-height: 230px; }
+      .cover-copy { width: 62%; padding: 22px; }
+      .cover-copy strong { font-size: 29px; }
+      .feature-info { display: block; padding: 22px; border-left: 0; border-top: 1px solid #2e2e2e; }
+      .feature-info .recent-label, .feature-info .feature-date { display: block; }
+      .feature-info h3 { margin: 10px 0 5px; font-size: 24px; }
+      .feature-desc { display: block; margin: 13px 0 18px; }
+      .list-head h2 { font-size: 23px; }
+      .content-row { grid-template-columns: 42px minmax(0,1fr) 36px; }
+      .row-meta { grid-column: 2; }
+      .modal { padding: 20px; }
+    }
+    }
+  </style>
+</head>
+<body>
+  <svg class="sr-only" aria-hidden="true">
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 5.5c3.5-1.4 6.5-.7 9 1.5 2.5-2.2 5.5-2.9 9-1.5v14c-3.5-1.4-6.5-.7-9 1.5-2.5-2.2-5.5-2.9-9-1.5v-14Z"/><path d="M12 7v14"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="14" height="14" rx="2"/><path d="m17 10 4-2v8l-4-2v-4Z"/><path d="m9 9 4 3-4 3V9Z"/></symbol>
+    <symbol id="i-link" viewBox="-1 -1 26 26"><path d="m10 13.5 4-4"/><path d="M7.4 15.6 5.3 17.7a3.5 3.5 0 0 1-5-5l4-4a3.5 3.5 0 0 1 5 0"/><path d="m16.6 8.4 2.1-2.1a3.5 3.5 0 0 1 5 5l-4 4a3.5 3.5 0 0 1-5 0"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6V3Z"/><path d="M14 3v5h5M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3V6Z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-export" viewBox="0 0 24 24"><path d="M12 16V3m0 0L7 8m5-5 5 5"/><path d="M5 13v8h14v-8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="m9 4 6 0-1 5 3 3v2H7v-2l3-3-1-5Z"/><path d="M12 14v7"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4 2v-8L3 5Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="内容分类">
+      <div class="brand">
+        <span class="logo-mark" aria-hidden="true"><img src="workspace-assets/yuexingren-logo-mark.png" alt=""></span>
+        <span>阅星人读书社</span>
+      </div>
+      <nav class="side-nav" id="sideNav"></nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-stat"><span id="sidebarTotal">26 项内容</span><span>持续更新</span></div>
+        <button class="manage-link" id="manageCategories">管理分类</button>
+      </div>
+    </aside>
+
+    <header class="mobile-header">
+      <div class="mobile-brand">
+        <span class="logo-mark" aria-hidden="true"><img src="workspace-assets/yuexingren-logo-mark.png" alt=""></span>
+        <span>阅星人读书社</span>
+      </div>
+      <div class="mobile-actions">
+        <button class="icon-button" id="mobileSearch" aria-label="聚焦搜索"><svg class="icon"><use href="#i-search"/></svg></button>
+        <button class="icon-button mobile-add" data-open-add aria-label="新增内容"><svg class="icon"><use href="#i-plus"/></svg></button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <div class="topbar">
+        <label class="search-box">
+          <span class="sr-only">搜索内容</span>
+          <svg class="icon"><use href="#i-search"/></svg>
+          <input class="search-input" id="searchInput" type="search" placeholder="搜索视频、工具、Skills 或文章" autocomplete="off">
+        </label>
+        <button class="action-btn" id="exportButton"><svg class="icon"><use href="#i-export"/></svg>导出清单</button>
+        <button class="action-btn primary" data-open-add><svg class="icon"><use href="#i-plus"/></svg>新增内容</button>
+      </div>
+
+      <nav class="mobile-categories" id="mobileCategories" aria-label="移动端分类"></nav>
+
+      <div class="workspace-grid">
+        <div class="main-panel">
+          <section class="overview" aria-labelledby="workspaceTitle">
+            <div class="hero-grid">
+              <div class="hero-visual" aria-hidden="true">
+                <img src="workspace-assets/reading-workspace-illustration.png" alt="">
+              </div>
+              <div class="hero-copy">
+                <span class="overview-eyebrow">READING CLUB WORKSPACE</span>
+                <h1 id="workspaceTitle">内容、工具与项目，<br>集中管理。</h1>
+                <p class="overview-copy">统一收录家长会视频、教学工具、<span class="latin">Codex Skills</span>、公众号文章与项目档案。</p>
+                <button class="action-btn primary hero-add" data-open-add><svg class="icon"><use href="#i-plus"/></svg>新增内容</button>
+              </div>
+            </div>
+            <div class="count-strip" id="countStrip"></div>
+          </section>
+
+          <section class="featured" id="featuredSection" aria-labelledby="featuredTitle">
+            <div class="feature-head">
+              <div class="feature-title">
+                <div class="type-icon type-video"><svg class="icon"><use href="#i-video"/></svg></div>
+                <h2 id="featuredTitle">家长会视频</h2>
+              </div>
+            </div>
+            <div class="video-directory">
+              <div class="video-group video-collection">
+                <span class="video-group-label">合集</span>
+                <a class="collection-link" href="https://hanroots.github.io/parent-video-vault-gaohan/all-videos/" target="_blank" rel="noopener">
+                  <span class="directory-icon"><svg class="icon"><use href="#i-folder"/></svg></span>
+                  <strong>全部家长会视频</strong>
+                  <svg class="icon directory-arrow"><use href="#i-chevron"/></svg>
+                </a>
+              </div>
+              <div class="video-group">
+                <span class="video-group-label">单项录像</span>
+                <div class="video-link-list">
+                  <a href="https://hanroots.github.io/parent-video-vault-gaohan/l4-to-l5/" target="_blank" rel="noopener"><span><span class="latin">L4</span> 升 <span class="latin">L5</span> 家长会录像</span><svg class="icon"><use href="#i-chevron"/></svg></a>
+                  <a href="https://hanroots.github.io/parent-video-vault-gaohan/l1-to-l2/" target="_blank" rel="noopener"><span><span class="latin">L1</span> 升 <span class="latin">L2</span> 家长会录像</span><svg class="icon"><use href="#i-chevron"/></svg></a>
+                  <a href="https://hanroots.github.io/parent-video-vault-gaohan/l1-to-l2-tangtang/" target="_blank" rel="noopener"><span><span class="latin">L1</span> 升 <span class="latin">L2</span> 家长会录像 · 糖糖版</span><svg class="icon"><use href="#i-chevron"/></svg></a>
+                  <a href="https://hanroots.github.io/parent-video-vault-gaohan/" target="_blank" rel="noopener"><span><span class="latin">2</span> 升 <span class="latin">3</span> 家长会录像</span><svg class="icon"><use href="#i-chevron"/></svg></a>
+                  <a href="https://hanroots.github.io/parent-video-vault-gaohan/3-to-4/" target="_blank" rel="noopener"><span><span class="latin">3</span> 升 <span class="latin">4</span> 家长会录像</span><svg class="icon"><use href="#i-chevron"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="list-panel" aria-labelledby="listTitle">
+            <div class="list-head">
+              <h2 id="listTitle">最近更新</h2>
+              <div class="list-tools">
+                <span class="result-count" id="resultCount"></span>
+                <button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false" aria-controls="filterMenu"><svg class="icon"><use href="#i-filter"/></svg>筛选</button>
+                <div class="filter-menu" id="filterMenu" hidden>
+                  <button data-quick="openable"><svg class="icon"><use href="#i-link"/></svg>可直接打开</button>
+                  <button data-quick="iterating"><svg class="icon"><use href="#i-refresh"/></svg>持续迭代</button>
+                  <button data-quick="recent"><svg class="icon"><use href="#i-calendar"/></svg>最近 30 天</button>
+                  <button data-quick="pinned"><svg class="icon"><use href="#i-pin"/></svg>已置顶</button>
+                </div>
+              </div>
+            </div>
+            <div class="content-list" id="contentList"></div>
+          </section>
+
+          <button class="archive-banner" type="button" data-type="project">
+            <span class="archive-icon"><svg class="icon"><use href="#i-folder"/></svg></span>
+            <span><strong>项目档案</strong><small>归档课程资料、活动策划与运营文档。</small></span>
+            <span class="archive-open">查看全部<svg class="icon"><use href="#i-chevron"/></svg></span>
+          </button>
+        </div>
+
+        <aside class="right-rail">
+          <section class="rail-card" aria-labelledby="pinnedTitle">
+            <h2 class="rail-title" id="pinnedTitle"><svg class="icon"><use href="#i-pin"/></svg>置顶内容</h2>
+            <div class="pinned-list" id="pinnedList"></div>
+          </section>
+          <section class="rail-card" aria-labelledby="quickTitle">
+            <h2 class="rail-title" id="quickTitle"><svg class="icon"><use href="#i-filter"/></svg>快速筛选</h2>
+            <div class="quick-list">
+              <button class="quick-button" data-quick="openable"><svg class="icon"><use href="#i-link"/></svg>可直接打开<svg class="icon chevron"><use href="#i-chevron"/></svg></button>
+              <button class="quick-button" data-quick="iterating"><svg class="icon"><use href="#i-refresh"/></svg>持续迭代<svg class="icon chevron"><use href="#i-chevron"/></svg></button>
+              <button class="quick-button" data-quick="recent"><svg class="icon"><use href="#i-calendar"/></svg>最近 30 天<svg class="icon chevron"><use href="#i-chevron"/></svg></button>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <nav class="mobile-bottom" aria-label="移动端快捷导航">
+      <button class="bottom-button is-active" data-bottom="all"><svg class="icon"><use href="#i-grid"/></svg><span>全部</span></button>
+      <button class="bottom-button" data-bottom="pinned"><svg class="icon"><use href="#i-pin"/></svg><span>置顶</span></button>
+      <button class="bottom-button" data-bottom="recent"><svg class="icon"><use href="#i-clock"/></svg><span>最近</span></button>
+      <button class="bottom-button" data-bottom="more"><svg class="icon"><use href="#i-more"/></svg><span>更多</span></button>
+    </nav>
+  </div>
+
+  <div class="modal-backdrop" id="addModal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="addTitle">
+      <div class="modal-head"><h2 id="addTitle">新增内容</h2><button class="icon-button" data-close-modal aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button></div>
+      <form id="addForm">
+        <div class="form-grid">
+          <div class="field"><label for="itemType">内容类型</label><select id="itemType" name="type" required><option value="video">家长会视频</option><option value="tool">教学工具</option><option value="skill">Codex Skills</option><option value="article">公众号文章</option><option value="project">项目档案</option></select></div>
+          <div class="field"><label for="itemDate">更新日期</label><input id="itemDate" name="date" type="date" value="2026-09-17" required></div>
+          <div class="field full"><label for="itemTitle">标题</label><input id="itemTitle" name="title" required placeholder="例如：新一期家长会录像"></div>
+          <div class="field full"><label for="itemDescription">简介</label><textarea id="itemDescription" name="description" required placeholder="这项内容解决什么问题？"></textarea></div>
+          <div class="field full"><label for="itemUrl">链接（可选）</label><input id="itemUrl" name="url" type="url" placeholder="https://..."></div>
+          <div class="field full"><label for="itemTags">标签（用逗号分隔）</label><input id="itemTags" name="tags" placeholder="阅读, 家长, 工具"></div>
+        </div>
+        <div class="modal-actions"><button class="action-btn" type="button" data-close-modal>取消</button><button class="action-btn primary" type="submit">保存到工作台</button></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="detailModal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <div class="modal-head"><h2 id="detailTitle">内容详情</h2><button class="icon-button" data-close-detail aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button></div>
+      <div class="detail-body" id="detailBody"></div>
+      <div class="modal-actions"><button class="action-btn" data-close-detail>关闭</button><button class="action-btn primary" id="detailCopy" type="button" hidden>复制本地路径</button><a class="action-btn primary" id="detailOpen" hidden>打开内容</a></div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const typeMeta = {
+      all: { label: '全部内容', short: '全部', icon: 'grid' },
+      video: { label: '家长会视频', short: '视频', icon: 'video' },
+      tool: { label: '教学工具', short: '工具', icon: 'link' },
+      skill: { label: 'Codex Skills', short: 'Skills', icon: 'star' },
+      article: { label: '公众号文章', short: '文章', icon: 'file' },
+      project: { label: '项目档案', short: '档案', icon: 'folder' }
+    };
+
+    const seedItems = [
+      { id:'video-l4-l5', type:'video', title:'L4 升 L5 家长会录像', description:'五年级语文的理解与表达升级、教材变化、自主学习与家庭支持。', date:'2026-09-16', url:'https://hanroots.github.io/parent-video-vault-gaohan/l4-to-l5/', tags:['家长会','L4','L5'], status:'published', pinned:true },
+      { id:'video-l1-l2', type:'video', title:'L1 升 L2 家长会录像', description:'阅读方式、文本难度、理解表达和家庭支持重点的阶段变化。', date:'2026-08-23', url:'https://hanroots.github.io/parent-video-vault-gaohan/l1-to-l2/', tags:['家长会','L1','L2'], status:'published', pinned:false },
+      { id:'video-l1-l2-tt', type:'video', title:'L1 升 L2 家长会录像 · 糖糖版', description:'从阅读连续性、课堂训练和课后积累说明 L2 学习升级。', date:'2026-08-23', url:'https://hanroots.github.io/parent-video-vault-gaohan/l1-to-l2-tangtang/', tags:['家长会','糖糖版'], status:'published', pinned:false },
+      { id:'video-2-3', type:'video', title:'2 升 3 家长会录像', description:'围绕三年级学习变化、整本书阅读、正式写作和作业安排展开。', date:'2026-07-09', url:'https://hanroots.github.io/parent-video-vault-gaohan/', tags:['家长会','二升三'], status:'published', pinned:false },
+      { id:'video-3-4', type:'video', title:'3 升 4 家长会录像', description:'介绍四年级文体升级、概括提问能力、做题习惯与家校配合。', date:'2026-07-16', url:'https://hanroots.github.io/parent-video-vault-gaohan/3-to-4/', tags:['家长会','三升四'], status:'published', pinned:false },
+
+      { id:'tool-attendance', type:'tool', title:'课程出勤统计仪表盘', description:'按教学周统计课程出勤率、次数，并展示日历数据。', date:'2026-09-13', url:'https://hanroots.github.io/attendance-dashboard/', openLabel:'打开仪表盘', tags:['数据','仪表盘','出勤'], status:'iterating', pinned:true },
+      { id:'tool-cpp', type:'tool', title:'CPP 与 Power Up 对比页', description:'从课程内容、难度和适合人群等维度对比两套教材。', date:'2026-09-12', url:'https://cpp-powerup-course-fit.dhfsb7fprt.chatgpt.site', openLabel:'打开对比页', tags:['英语','教材','网页'], status:'iterating', pinned:false },
+      { id:'tool-package-bot', type:'tool', title:'课包机器人', description:'读取课包、教案、课件、PPT、大纲、导读图与课后任务。', date:'2026-09-11', localPath:'/Users/han/Desktop/课包', copyLabel:'复制课包路径', launchNote:'该项目在 Codex 中运行，没有独立网页入口。可复制课包目录路径后在 Finder 中打开。', tags:['课包','自动化'], status:'iterating', pinned:false },
+      { id:'tool-growth', type:'tool', title:'学生成长手册', description:'记录课堂表现、阅读写作、作品、测评与家校沟通并生成报告。', date:'2026-07-10', url:'http://127.0.0.1:8789', openLabel:'打开成长手册', launchNote:'这是本机工具。打开前需要先双击桌面的“启动成长手册”。', tags:['学生档案','SQLite','报告'], status:'iterating', pinned:true },
+      { id:'tool-essay', type:'tool', title:'改作文工作台', description:'面向老师的作文智能批改、结构化评价与报告生成工具。', date:'2026-09-08', url:'https://hanroots.github.io/essay-grading-app/', openLabel:'打开工作台', tags:['作文','AI','教师'], status:'iterating', pinned:true },
+      { id:'tool-checkin', type:'tool', title:'阅星球／阅读伴学打卡系统', description:'连接学生阅读打卡、教师反馈、老师预览与星光奖励。', date:'2026-09-06', url:'https://teacher-web-future-date-v2-yuexingren-prod-d3fawbv3141747cb.webapps.tcloudbase.com/', openLabel:'打开教师后台', tags:['小程序','阅读','打卡'], status:'iterating', pinned:false },
+      { id:'tool-transfer', type:'tool', title:'一拍传', description:'局域网扫码连接手机与电脑，把照片直接推送到电脑剪贴板。', date:'2026-09-05', url:'http://127.0.0.1:4173', openLabel:'打开一拍传', launchNote:'这是本机工具。请先启动“一拍传”应用；端口冲突时，以启动器实际打开的地址为准。', tags:['局域网','照片','效率'], status:'ready', pinned:true },
+      { id:'tool-taskline', type:'tool', title:'Taskline 日程管理', description:'用横向时间线组织任务、迷你任务、里程碑和逾期状态。', date:'2026-07-02', localPath:'/Users/han/Documents/日程管理/dist/release/Taskline.app', copyLabel:'复制应用路径', launchNote:'这是本地 macOS 应用，不通过网页启动。可复制应用路径后在 Finder 中打开。', tags:['macOS','时间线','任务'], status:'iterating', pinned:false },
+      { id:'tool-classroom', type:'tool', title:'教室资源看板与预约系统', description:'统一管理 5 间教室的长期班排课和临时使用。', date:'2026-09-04', url:'http://127.0.0.1:4181', openLabel:'打开教室看板', launchNote:'这是本机工具，需要先启动教室看板服务。', tags:['教室','看板','预约'], status:'planning', pinned:false },
+      { id:'tool-reading', type:'tool', title:'阅读理解技巧知识库', description:'把阅读理解方法分类整理成清晰的卡片式知识网页。', date:'2026-08-01', url:'https://hanroots.github.io/reading-comprehension-tips/', openLabel:'打开知识库', tags:['语文','知识库','网页'], status:'ready', pinned:false },
+
+      { id:'skill-parent-doc', type:'skill', title:'课包家长说明生成器', description:'把完整中文阅读课包转成家长能看懂的课程交付说明。', date:'2026-09-10', tags:['课包','家长说明','DOCX'], status:'ready', pinned:false },
+      { id:'skill-lesson-plan', type:'skill', title:'教师教案生成器', description:'根据 PPT 和课包补齐可直接备课的教案与近逐字稿。', date:'2026-09-10', tags:['教案','备课','PPT'], status:'ready', pinned:false },
+      { id:'skill-workbook', type:'skill', title:'整本书阅读成长手册', description:'从书名和年级出发，生成 A5、22 页的阅读成长手册。', date:'2026-09-10', tags:['整本书','手册','PDF'], status:'ready', pinned:true },
+      { id:'skill-booklist', type:'skill', title:'中文书单公众号内容包', description:'把中文书单制作成微信 HTML、Markdown、封面和配图素材。', date:'2026-09-10', tags:['书单','公众号','内容'], status:'ready', pinned:false },
+      { id:'skill-video', type:'skill', title:'家长会视频发布器', description:'完成视频检查、转写、摘要、时间锚点、OSS 上传和网页发布。', date:'2026-09-16', tags:['视频','OSS','发布'], status:'ready', pinned:false },
+      { id:'skill-ppt', type:'skill', title:'家长会 PPT 会前说明', description:'从升班或家长会 PPT 生成准确、易读的会前家长说明。', date:'2026-09-10', tags:['家长会','PPT','Word'], status:'ready', pinned:false },
+
+      { id:'article-learning-confidence', type:'article', title:'学习信心，比金子还重要', description:'讨论学习信心对孩子持续投入和长期成长的影响。', date:'', seriesOrder:10, url:'https://mp.weixin.qq.com/s?__biz=Mzk0NzQzMjAwMA==&mid=2247485865&idx=1&sn=c472a69c507cee07c4d7b8a1368ed4b1&chksm=c377b686f4003f90eefe5580167dd433ee507c3b4c05cff83afe6512c6121da56fe8b4c4ec19&scene=178&cur_album_id=4692402494386405383', tags:['学习信心','成长','家长'], status:'published', pinned:false },
+      { id:'article-grade-anxiety', type:'article', title:'新年级开始后，给焦虑父母的一剂良药', description:'分析新年级开始后的家长焦虑，并提供更稳定的观察视角。', date:'', seriesOrder:9, url:'https://mp.weixin.qq.com/s?__biz=Mzk0NzQzMjAwMA==&mid=2247485861&idx=1&sn=717fc8fec21a8396b3845c4d05db6b85&chksm=c377b68af4003f9cf9b290c5b19d2d68308a46b2c22df5fa0f23bbff7de99afa48766169dc99&scene=178&cur_album_id=4692402494386405383', tags:['新年级','家长','焦虑'], status:'published', pinned:false },
+      { id:'article-difficulty', type:'article', title:'一次性讲透彻，家长如何真正化解畏难情绪', description:'从学习过程出发，说明家长如何识别并应对孩子的畏难情绪。', date:'', seriesOrder:8, url:'https://mp.weixin.qq.com/s?__biz=Mzk0NzQzMjAwMA==&mid=2247485794&idx=1&sn=389084aa8d475ccd06a7d5af5883f056&chksm=c377b64df4003f5b96719067a91de40530d452b2b8aa55b8c6ee948d3596a25b3273985d9487&scene=178&cur_album_id=4692402494386405383', tags:['畏难情绪','家长','学习'], status:'published', pinned:false },
+      { id:'article-textbook', type:'article', title:'以新初一为例看新教材变化方向', description:'从新教材变化理解语文学习对阅读、表达和思考能力的新要求。', date:'2026-07-19', seriesOrder:7, url:'https://mp.weixin.qq.com/s?__biz=Mzk0NzQzMjAwMA==&mid=2247485745&idx=1&sn=ef0fc3f915c43815b7f6e72d1aa40967&chksm=c377b61ef4003f08e9f78cd2fd6dffd0abee78781d70afc4ba07129456875ea572b01da349f7&scene=178&cur_album_id=4692402494386405383', tags:['新教材','初一','语文'], status:'published', pinned:false },
+      { id:'article-writing-class', type:'article', title:'范文教不会的写作能力，正在当堂写作里慢慢发生', description:'说明真实写作能力如何在课堂练习和即时反馈中逐步形成。', date:'', seriesOrder:6, url:'https://mp.weixin.qq.com/s?__biz=Mzk0NzQzMjAwMA==&mid=2247485633&idx=1&sn=d152c49ebbe3eb1c9272ec214cd64540&chksm=c377b7eef4003ef8b4c9b263cf746bd3033cdde33e5d38dad2add4b37e9860d09d1e12567c7b&scene=178&cur_album_id=4692402494386405383', tags:['写作','课堂','表达'], status:'published', pinned:false },
+      { id:'article-literacy-gap', type:'article', title:'识字带来的两极分化', description:'讨论识字基础差异如何逐步影响阅读理解和后续语文学习。', date:'', seriesOrder:5, url:'https://mp.weixin.qq.com/s?__biz=Mzk0NzQzMjAwMA==&mid=2247485681&idx=1&sn=8518562e12ce0d463e2d7f2151b6787a&chksm=c377b7def4003ec839847191b5e3ff011e596e530ab38b7a714591afa954e5f61dc5b14402c2&scene=178&cur_album_id=4692402494386405383', tags:['识字','阅读','基础'], status:'published', pinned:false },
+      { id:'article-chinese-horizon', type:'article', title:'学习语文应该盯着当下，着眼未来', description:'从当前训练与长期能力两个尺度理解语文学习安排。', date:'', seriesOrder:4, url:'https://mp.weixin.qq.com/s?__biz=Mzk0NzQzMjAwMA==&mid=2247485670&idx=1&sn=b3d3f92abaac886d9925f40a62d3a737&chksm=c377b7c9f4003edf6ffc9e30aa7dff838f129581311c1d940939df7f584e2f8bbc81450eed85&scene=178&cur_album_id=4692402494386405383', tags:['语文学习','长期能力'], status:'published', pinned:false },
+      { id:'article-read-practice', type:'article', title:'“只读不练”和“只练不读”都不行', description:'说明阅读输入与练习输出之间需要保持平衡。', date:'', seriesOrder:3, url:'https://mp.weixin.qq.com/s?__biz=Mzk0NzQzMjAwMA==&mid=2247485611&idx=1&sn=2ab8c94e5ec87cc79d93722b33188436&chksm=c377b784f4003e92b1c247eb16c1faa92cdd30f3e72e2bcdc6ca4259afae6974c18c9dffcdee&scene=178&cur_album_id=4692402494386405383', tags:['阅读','练习','学习方法'], status:'published', pinned:false },
+      { id:'article-language-foundation', type:'article', title:'如何建立稳固扎实的语文能力', description:'梳理语文基础能力的构成及其长期积累方式。', date:'', seriesOrder:1, url:'https://mp.weixin.qq.com/s?__biz=Mzk0NzQzMjAwMA==&mid=2247485532&idx=1&sn=82e357f537e44a5ae47958d82a78551d&chksm=c377b773f4003e65c7520fe26827b3df91f0a80c5da78639c2976477cb93de0fa67b58c36459&scene=178&cur_album_id=4692402494386405383', tags:['语文能力','基础','积累'], status:'published', pinned:false },
+      { id:'article-patience', type:'article', title:'在这个暑假帮孩子找回阅读的耐心', description:'面向家长讨论如何重新建立孩子稳定而有耐心的阅读状态。', date:'2026-07-19', url:'https://mp.weixin.qq.com/s/wsiFl6HpH4QCvfYgg0_Rcg', tags:['阅读','暑假','家长'], status:'published', pinned:false },
+      { id:'article-reading', type:'article', title:'一次性说清楚整本书阅读和语文素养', description:'解释整本书阅读与语文核心素养之间的真实关系。', date:'2026-07-19', url:'https://mp.weixin.qq.com/s/8r6v8Mn7nixot5ZHgGs4hg', tags:['整本书','语文素养'], status:'published', pinned:false },
+
+      { id:'project-portfolio', type:'project', title:'教育产品与数字化实践', description:'汇总核心产品与教育内容数字化项目的完整介绍档案。', date:'2026-09-10', url:'education-project-portfolio.html', tags:['项目合集','作品集'], status:'ready', pinned:false },
+      { id:'project-ip', type:'project', title:'阅星人动物 IP 世界观', description:'围绕 12 个动物角色整理教育理念、成长力量与品牌故事。', date:'2026-08-08', url:'https://hanroots.github.io/reading-partners-ip-site/?v=df33f51', openLabel:'打开 IP 世界观', tags:['IP','品牌','故事'], status:'planning', pinned:false }
+    ];
+
+    const statusMeta = {
+      published: '已发布',
+      ready: '可使用',
+      iterating: '迭代中',
+      planning: '规划中',
+      custom: '自定义'
+    };
+
+    const customKey = 'codexWorkspaceCustomItemsV1';
+    const pinKey = 'codexWorkspacePinnedV1';
+    let customItems = safeParse(localStorage.getItem(customKey), []);
+    let pinOverrides = safeParse(localStorage.getItem(pinKey), {});
+    let activeType = 'all';
+    let quickFilter = null;
+    let searchTerm = '';
+
+    function safeParse(value, fallback) { try { return value ? JSON.parse(value) : fallback; } catch { return fallback; } }
+    function allItems() { return [...customItems, ...seedItems].map(item => ({...item, pinned: pinOverrides[item.id] ?? item.pinned})); }
+    function iconMarkup(type) { const icon = typeMeta[type]?.icon || 'file'; return `<svg class="icon"><use href="#i-${icon}"/></svg>`; }
+    function typeIcon(type) { return `<div class="type-icon type-${type}">${iconMarkup(type)}</div>`; }
+    function typeCount(type) { return allItems().filter(i => i.type === type).length; }
+    function formatDate(date) { return (date || '').replaceAll('-', '.'); }
+    function isRecent(date) { return date >= '2026-08-18'; }
+    function matches(item) {
+      if (activeType !== 'all' && item.type !== activeType) return false;
+      if (quickFilter === 'openable' && !item.url) return false;
+      if (quickFilter === 'iterating' && item.status !== 'iterating') return false;
+      if (quickFilter === 'recent' && !isRecent(item.date)) return false;
+      if (quickFilter === 'pinned' && !item.pinned) return false;
+      if (!searchTerm) return true;
+      const haystack = [item.title, item.description, ...(item.tags || []), typeMeta[item.type].label].join(' ').toLowerCase();
+      return haystack.includes(searchTerm.toLowerCase());
+    }
+
+    function renderNavigation() {
+      const order = ['all','video','tool','skill','article','project'];
+      document.getElementById('sideNav').innerHTML = order.map(type => `<button class="nav-button ${activeType === type ? 'is-active' : ''}" data-type="${type}">${iconMarkup(type)}<span class="${type === 'skill' ? 'latin' : ''}">${typeMeta[type].label}</span><span class="nav-count">${type === 'all' ? allItems().length : typeCount(type)}</span></button>`).join('');
+      document.getElementById('mobileCategories').innerHTML = order.map(type => `<button class="category-chip ${activeType === type ? 'is-active' : ''}" data-type="${type}"><span class="${type === 'skill' ? 'latin' : ''}">${typeMeta[type].short}</span></button>`).join('');
+      document.getElementById('sidebarTotal').textContent = `${allItems().length} 项内容`;
+      document.querySelectorAll('[data-type]').forEach(button => { button.onclick = () => { activeType = button.dataset.type; quickFilter = null; renderAll(); }; });
+    }
+
+    function renderCounts() {
+      const order = ['video','tool','skill','article','project'];
+      document.getElementById('countStrip').innerHTML = order.map(type => `<button class="count-button ${activeType === type ? 'is-active' : ''}" data-count-type="${type}">${typeIcon(type)}<span><span class="count-number">${typeCount(type)}</span><span class="count-label ${type === 'skill' ? 'latin' : ''}">${typeMeta[type].short}</span></span></button>`).join('');
+      document.querySelectorAll('[data-count-type]').forEach(button => button.addEventListener('click', () => { activeType = button.dataset.countType; quickFilter = null; renderAll(); document.getElementById('listTitle').scrollIntoView({behavior:'smooth', block:'start'}); }));
+    }
+
+    function getFilteredItems() {
+      return allItems().filter(matches).sort((a,b) => {
+        if (activeType === 'article' && (a.seriesOrder || b.seriesOrder)) return (b.seriesOrder || 0) - (a.seriesOrder || 0);
+        return (b.date || '').localeCompare(a.date || '') || a.title.localeCompare(b.title, 'zh-CN');
+      });
+    }
+
+    function renderList() {
+      const items = getFilteredItems();
+      const listTitle = searchTerm ? `“${searchTerm}”的搜索结果` : quickFilter === 'pinned' ? '置顶内容' : activeType === 'all' ? '最近更新' : typeMeta[activeType].label;
+      document.getElementById('listTitle').textContent = listTitle;
+      document.getElementById('resultCount').textContent = `${items.length} 项`;
+      const list = document.getElementById('contentList');
+      if (!items.length) { list.innerHTML = `<div class="empty-state"><strong>没有找到相关内容</strong><span>换一个关键词，或清除筛选条件后再试。</span></div>`; return; }
+      list.innerHTML = items.map(item => `<article class="content-row" data-item-id="${item.id}">
+        ${typeIcon(item.type)}
+        <div class="row-main" tabindex="0" role="button" aria-label="查看 ${item.title}"><div class="row-title-line"><span class="row-title">${formatMixedText(item.title)}</span>${item.url ? `<svg class="icon open-mark" width="14" height="14"><use href="#i-link"/></svg>` : ''}</div><div class="row-desc">${formatMixedText(item.description)}</div></div>
+        <span class="row-type ${item.type === 'skill' ? 'latin' : ''}">${typeMeta[item.type].label}</span>
+        <span class="row-status status-${item.status || 'custom'}">${statusMeta[item.status] || statusMeta.custom}</span>
+        <div class="row-meta">${isRecent(item.date) ? '<i class="fresh-dot"></i>' : ''}${item.seriesOrder ? `<span class="series-index">第 ${item.seriesOrder} 篇</span>` : `<span class="meta-type">${typeMeta[item.type].short}</span>`}${item.date ? `<time>${item.seriesOrder ? '· ' : ''}${formatDate(item.date)}</time>` : ''}</div>
+        <button class="icon-button ${item.pinned ? 'is-pinned' : ''}" data-pin-id="${item.id}" aria-label="${item.pinned ? '取消置顶' : '置顶'} ${item.title}"><svg class="icon"><use href="#i-star"/></svg></button>
+      </article>`).join('');
+      document.querySelectorAll('.row-main').forEach(el => { el.addEventListener('click', () => openItem(el.closest('[data-item-id]').dataset.itemId)); el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openItem(el.closest('[data-item-id]').dataset.itemId); } }); });
+      document.querySelectorAll('[data-pin-id]').forEach(button => button.addEventListener('click', e => { e.stopPropagation(); togglePin(button.dataset.pinId); }));
+    }
+
+    function renderPinned() {
+      const items = allItems().filter(i => i.pinned).slice(0,6);
+      document.getElementById('pinnedList').innerHTML = items.length ? items.map(item => `<div class="pinned-item" data-item-id="${item.id}">${typeIcon(item.type)}<div><div class="pinned-title" tabindex="0">${escapeHtml(item.title)}</div><div class="pinned-type">${typeMeta[item.type].label}</div></div><button class="icon-button pin-remove is-pinned" data-pin-id="${item.id}" aria-label="取消置顶 ${item.title}"><svg class="icon"><use href="#i-pin"/></svg></button></div>`).join('') : '<div class="empty-state"><span>还没有置顶内容</span></div>';
+      document.querySelectorAll('.pinned-item .pinned-title').forEach(el => el.addEventListener('click', () => openItem(el.closest('[data-item-id]').dataset.itemId)));
+      document.querySelectorAll('.pin-remove').forEach(button => button.addEventListener('click', () => togglePin(button.dataset.pinId)));
+    }
+
+    function renderFeature() { document.getElementById('featuredSection').hidden = !(activeType === 'all' || activeType === 'video') || !!searchTerm || !!quickFilter; }
+    function renderAll() { renderNavigation(); renderCounts(); renderFeature(); renderList(); renderPinned(); updateBottomNav(); }
+
+    function togglePin(id) { const item = allItems().find(i => i.id === id); if (!item) return; pinOverrides[id] = !item.pinned; localStorage.setItem(pinKey, JSON.stringify(pinOverrides)); renderAll(); showToast(pinOverrides[id] ? '已置顶' : '已取消置顶'); }
+    function openItem(id) { const item = allItems().find(i => i.id === id); if (!item) return; showDetail(item); }
+
+    function showDetail(item) {
+      document.getElementById('detailTitle').innerHTML = formatMixedText(item.title);
+      const entryNote = item.launchNote || (!item.url ? '当前没有可直接打开的网页入口。' : '');
+      document.getElementById('detailBody').innerHTML = `<div class="detail-kicker">${typeIcon(item.type)}<span>${typeMeta[item.type].label}${item.date ? ` · <span class="latin">${formatDate(item.date)}</span>` : ''}</span></div><p class="detail-desc">${formatMixedText(item.description)}</p><div class="detail-tags">${(item.tags || []).map(tag => `<span class="detail-tag">${formatMixedText(tag)}</span>`).join('')}</div>${entryNote ? `<p class="entry-note">${formatMixedText(entryNote)}</p>` : ''}`;
+      const open = document.getElementById('detailOpen');
+      open.hidden = !item.url;
+      open.textContent = item.openLabel || (item.type === 'tool' ? '打开工具' : '打开内容');
+      if (item.url) open.href = item.url; else open.removeAttribute('href');
+      const copy = document.getElementById('detailCopy');
+      copy.hidden = !item.localPath;
+      copy.textContent = item.copyLabel || '复制本地路径';
+      copy.dataset.path = item.localPath || '';
+      openModal(document.getElementById('detailModal'));
+    }
+
+    async function copyText(value) {
+      try { await navigator.clipboard.writeText(value); return true; }
+      catch {
+        const input = document.createElement('textarea'); input.value = value; input.style.position = 'fixed'; input.style.opacity = '0'; document.body.appendChild(input); input.select();
+        const copied = document.execCommand('copy'); input.remove(); return copied;
+      }
+    }
+
+    function openModal(modal) { modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; setTimeout(() => modal.querySelector('input, button, a')?.focus(), 30); }
+    function closeModal(modal) { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+    function escapeHtml(value='') { return value.replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char])); }
+    function formatMixedText(value='') { return escapeHtml(value).replace(/([A-Za-z0-9]+(?:[ .+/-][A-Za-z0-9]+)*)/g, '<span class="latin">$1</span>'); }
+    let toastTimer;
+    function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.classList.add('is-visible'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2200); }
+
+    document.getElementById('searchInput').addEventListener('input', e => { searchTerm = e.target.value.trim(); quickFilter = null; renderFeature(); renderList(); });
+    document.getElementById('filterToggle').addEventListener('click', e => {
+      e.stopPropagation();
+      const menu = document.getElementById('filterMenu');
+      menu.hidden = !menu.hidden;
+      e.currentTarget.setAttribute('aria-expanded', String(!menu.hidden));
+    });
+    document.addEventListener('click', e => {
+      const menu = document.getElementById('filterMenu');
+      if (!menu.hidden && !e.target.closest('.list-tools')) {
+        menu.hidden = true;
+        document.getElementById('filterToggle').setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.getElementById('mobileSearch').addEventListener('click', () => {
+      const topbar = document.querySelector('.topbar');
+      topbar.classList.toggle('is-mobile-open');
+      if (topbar.classList.contains('is-mobile-open')) setTimeout(() => document.getElementById('searchInput').focus(), 30);
+    });
+    document.querySelectorAll('[data-open-add]').forEach(button => button.addEventListener('click', () => openModal(document.getElementById('addModal'))));
+    document.querySelectorAll('[data-close-modal]').forEach(button => button.addEventListener('click', () => closeModal(document.getElementById('addModal'))));
+    document.querySelectorAll('[data-close-detail]').forEach(button => button.addEventListener('click', () => closeModal(document.getElementById('detailModal'))));
+    document.getElementById('detailCopy').addEventListener('click', async e => {
+      const copied = await copyText(e.currentTarget.dataset.path || '');
+      showToast(copied ? '本地路径已复制' : '复制失败，请手动记录路径');
+    });
+    document.querySelectorAll('.modal-backdrop').forEach(modal => modal.addEventListener('click', e => { if (e.target === modal) closeModal(modal); }));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-backdrop.is-open').forEach(closeModal); });
+
+    document.getElementById('addForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = new FormData(e.currentTarget);
+      customItems.unshift({ id:`custom-${Date.now()}`, type:data.get('type'), title:data.get('title').trim(), description:data.get('description').trim(), date:data.get('date'), url:data.get('url').trim(), tags:data.get('tags').split(/[,，]/).map(t=>t.trim()).filter(Boolean), status:'custom', pinned:false });
+      localStorage.setItem(customKey, JSON.stringify(customItems));
+      e.currentTarget.reset(); document.getElementById('itemDate').value = '2026-09-17'; closeModal(document.getElementById('addModal')); activeType = 'all'; searchTerm = ''; document.getElementById('searchInput').value = ''; renderAll(); showToast('内容已保存到工作台');
+    });
+
+    document.getElementById('exportButton').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify({ exportedAt:new Date().toISOString(), items:allItems() }, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = `codex-workspace-${new Date().toISOString().slice(0,10)}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); showToast('清单已导出');
+    });
+
+    document.querySelectorAll('[data-quick]').forEach(button => button.addEventListener('click', () => {
+      activeType = 'all'; quickFilter = button.dataset.quick; searchTerm = ''; document.getElementById('searchInput').value = '';
+      document.getElementById('filterMenu').hidden = true;
+      document.getElementById('filterToggle').setAttribute('aria-expanded', 'false');
+      renderAll(); document.getElementById('listTitle').scrollIntoView({behavior:'smooth'});
+    }));
+    document.getElementById('manageCategories').addEventListener('click', () => showToast('分类已按视频、工具、Skills、文章和档案整理'));
+
+    document.querySelectorAll('[data-bottom]').forEach(button => button.addEventListener('click', () => {
+      const mode = button.dataset.bottom;
+      if (mode === 'all') { activeType = 'all'; quickFilter = null; }
+      if (mode === 'pinned') { activeType = 'all'; quickFilter = 'pinned'; }
+      if (mode === 'recent') { activeType = 'all'; quickFilter = 'recent'; }
+      if (mode === 'more') { openModal(document.getElementById('addModal')); return; }
+      searchTerm = ''; document.getElementById('searchInput').value = ''; renderAll(); window.scrollTo({top:0, behavior:'smooth'});
+    }));
+
+    function updateBottomNav() {
+      document.querySelectorAll('[data-bottom]').forEach(button => button.classList.remove('is-active'));
+      const target = quickFilter === 'pinned' ? 'pinned' : quickFilter === 'recent' ? 'recent' : 'all';
+      document.querySelector(`[data-bottom="${target}"]`)?.classList.add('is-active');
+    }
+
+    renderAll();
+  </script>
+</body>
+</html>
